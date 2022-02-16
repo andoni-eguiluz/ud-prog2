@@ -9,7 +9,7 @@ public class TiposBasicos {
 	
 	// Mundo STATIC - de clase - solo una vez - siempre
 	
-	public static int datoEstatico;  // Este atributo es una variable que existe todo el tiempo del programa y solo una vez
+	public static int datoEstatico;  // Este atributo es una variable que existe todo el tiempo del programa y solo una vez	
 	
 	// Método principal
 	public static void main(String[] params) {
@@ -19,6 +19,7 @@ public class TiposBasicos {
 		ambito(5);
 		System.out.println( potencia(3) );
 		System.out.println( potencia(3,4) );
+		System.out.println( potencia(3L,4L) );
 		return;
 	}
 
@@ -36,6 +37,9 @@ public class TiposBasicos {
 		System.out.println( Integer.MAX_VALUE );
 		long varLong; // 8 bytes
 		varLong = 12345678901L;  // L sufijo para literal entero LONG (los literales enteros por defecto son int)
+		// int varintAVerSiCabe = varLong;  No se puede porque no cabe
+		long varLong2 = 1L;
+		int varIntAVerSiCabe = (int) varLong;  // Conversión explícita
 		System.out.println( varLong );
 		varLong = 12_345_678_901L;  // Los subrayados es como si no estuvieran (pueden marcar por ejemplo miles, para lectura)
 		System.out.println( varLong );
@@ -48,7 +52,7 @@ public class TiposBasicos {
 		int varInt2 = 17;
 		
 		// 2 tipos son numéricos reales
-		float f1 = 3.2F;  // Por defecto 3.2 es double   (4 bytes)
+		float f1 = 3.0f; // otra manera (float) 3.2;  // Por defecto 3.2 es double   (4 bytes)
 		double d1 = 3.2;  // (8 bytes)
 		float  f2 = (float) d1;  // conversión explícita
 		System.out.println( Float.MIN_VALUE );
@@ -68,6 +72,7 @@ public class TiposBasicos {
 		boolean varLogica = true; // false solo hay dos literales
 		boolean varLogica2 = (5 < 6) || (4 >= 8);
 		char car = '5';  // char entre comillas simples y solo un car
+		char car2 = 'A' + 1;
 	}
 
 	// Un poquito de expresiones:
@@ -106,6 +111,8 @@ public class TiposBasicos {
 			byte varByte2; // Declaración - ámbito del bloque en el que se declara
 		}
 		// varByte2 = 1;  // Fuera del bloque no se puede acceder
+		
+		
 	}
 
 	// Ejemplo de dos métodos sobrecargados. Se llaman igual pero tienen distinta signatura (diferentes parámetros)
@@ -121,7 +128,12 @@ public class TiposBasicos {
 			i=i+1;
 			System.out.println( j );
 		}
+		System.out.println( i );
 		return resul;
+	}
+	
+	public static long potencia( long base, long exponente ) {
+		return (long) Math.pow(base, exponente);
 	}
 	
 	public static long potencia( int base ) {
