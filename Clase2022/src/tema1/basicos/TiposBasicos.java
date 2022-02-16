@@ -1,5 +1,7 @@
 package tema1.basicos;
 
+import java.util.Date;
+
 /** Clase de ejemplo de Java para revisar los tipos de datos primitivos
  * @author andoni.eguiluz at ingenieria.deusto.es
  */
@@ -11,6 +13,7 @@ public class TiposBasicos {
 	
 	// Método principal
 	public static void main(String[] params) {
+		System.out.println( datoEstatico );
 		tiposPrimitivos( 3, '3' );
 		expresiones();
 		ambito(5);
@@ -33,9 +36,14 @@ public class TiposBasicos {
 		System.out.println( Integer.MAX_VALUE );
 		long varLong; // 8 bytes
 		varLong = 12345678901L;  // L sufijo para literal entero LONG (los literales enteros por defecto son int)
+		System.out.println( varLong );
+		varLong = 12_345_678_901L;  // Los subrayados es como si no estuvieran (pueden marcar por ejemplo miles, para lectura)
+		System.out.println( varLong );
 		System.out.println( Long.MIN_VALUE );  // A consola los long mínimo y máximo
 		System.out.println( Long.MAX_VALUE );
-		
+		System.out.println( System.currentTimeMillis() );
+		System.out.println( new Date( System.currentTimeMillis() ) );
+		System.out.println( new Date( Long.MAX_VALUE ) );
 		// Las declaraciones pueden ser con inicialización (se hace a menudo, es muy cómodo)
 		int varInt2 = 17;
 		
@@ -47,9 +55,18 @@ public class TiposBasicos {
 		System.out.println( Float.MAX_VALUE );
 		System.out.println( Double.MIN_VALUE );
 		System.out.println( Double.MAX_VALUE );
+		// NO COMPARAR CON ==  !=
+		// Cómo comparar dos doubles?  aprox en 3 decimales
+		double double1 = 5.0031;
+		double double2 = 5.0032;
+		// if (double1==double2) {
+		if (Math.abs(double2-double1) < 0.001) {
+			System.out.println( "Son iguales");
+		}
 		
 		// Los últimos 2 tipos primitivos:
 		boolean varLogica = true; // false solo hay dos literales
+		boolean varLogica2 = (5 < 6) || (4 >= 8);
 		char car = '5';  // char entre comillas simples y solo un car
 	}
 
