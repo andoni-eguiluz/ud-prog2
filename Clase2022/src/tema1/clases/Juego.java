@@ -5,13 +5,17 @@ import java.util.Date;
 public class Juego {
 	
 	// STATIC
-	public static int numTotalHorasJugadas;
+	private static int numTotalHorasJugadas;
 	
+	public static int getNumTotalHorasJugadas() {
+		return numTotalHorasJugadas;
+	}
+
 	
 	// NO STATIC 
 	
 	private String nombre = "default";
-	private String genero;
+	private Genero genero;
 	private int edadMinimaRecomendada;
 	private Date fechaCompra;
 	private int numHorasJugadas;
@@ -26,6 +30,7 @@ public class Juego {
 		// 1.- CREA UN NUEVO OBJETO DE ESTA CLASE (asigna memoria)
 		// 2.- Se asigna la REFERENCIA de ese espacio a la variable this
 		// this se asigna al objeto en curso
+		// 2bis.- Se llama al constructor del padre (super)
 		// 3.- Nuestro trabajo - inicializar:
 		this.nombre = nombre;
 		// 4.- DEVUELVE LA REFERENCIA this
@@ -38,14 +43,26 @@ public class Juego {
 	 */
 	public Juego( String nombre, int numHorasJugadas ) {
 		this.nombre = nombre;
-//		if (numHorasJugadas < 0) {
-//			System.err.println( "Error: número de horas " + numHorasJugadas + " es negativo" );
-//		} else {
-//			this.numHorasJugadas = numHorasJugadas;
-//		}
 		this.setNumHorasJugadas(numHorasJugadas);
+		// Esto mejor hacerlo en el set que repetirlo también aquí:
+		//		if (numHorasJugadas < 0) {
+		//			System.err.println( "Error: número de horas " + numHorasJugadas + " es negativo" );
+		//		} else {
+		//			this.numHorasJugadas = numHorasJugadas;
+		//		}
 	}
 	
+	public Juego(String nombre, Genero genero, int edadMinimaRecomendada, Date fechaCompra, int numHorasJugadas,
+			double precioFinal) {
+		this( nombre, numHorasJugadas );
+		// this.nombre = nombre;
+		// this.setNumHorasJugadas(numHorasJugadas);
+		this.genero = genero;
+		this.edadMinimaRecomendada = edadMinimaRecomendada;
+		this.fechaCompra = fechaCompra;
+		this.precioFinal = precioFinal;
+	}
+
 	/** Devuelve el nombre del juego
 	 * @return	Nombre
 	 */
@@ -69,15 +86,17 @@ public class Juego {
 		if (numHorasJugadas < 0) {
 			System.err.println( "Error: número de horas " + numHorasJugadas + " es negativo" );
 		} else {
+			numTotalHorasJugadas -= this.numHorasJugadas;
 			this.numHorasJugadas = numHorasJugadas;
+			numTotalHorasJugadas += this.numHorasJugadas;
 		}
 	}
 
-	public String getGenero() {
+	public Genero getGenero() {
 		return genero;
 	}
 
-	public void setGenero(String genero) {
+	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
 
@@ -116,8 +135,7 @@ public class Juego {
 	}
 
 	public void setPrecioSinIva(double precioSinIva) {
-		// TODO  Corregir
-		// FIXME
+		// TODO  Corregir para que los precios tengan coherencia
 		this.precioSinIva = precioSinIva;
 	}
 
@@ -126,7 +144,7 @@ public class Juego {
 	}
 
 	public void setIva(double iva) {
-		// TODO  Corregir
+		// TODO  Corregir para que los precios tengan coherencia
 		this.iva = iva;
 	}
 
@@ -137,6 +155,13 @@ public class Juego {
 		boolean ret = this.nombre.equals(juego2.nombre);
 		boolean ret2 = this.numHorasJugadas == juego2.numHorasJugadas;
 		return ret && ret2;
+	}
+	
+	@Override
+	public String toString() {
+		return getNombre() 
+				+ ((genero==null) ? " " : (" [" + genero + "] ")) 
+				+ String.format( "%.2f", precioFinal );
 	}
 	
 }

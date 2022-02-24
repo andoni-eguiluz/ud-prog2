@@ -2,6 +2,9 @@ package tema1.clases;
 
 public class MainJuego {
 	public static void main(String[] args) {
+		
+		System.out.println( Juego.getNumTotalHorasJugadas() );
+		
 		Juego miJuego = new Juego( "Tetris" );
 		// miJuego.nombre = "Tetris";
 		System.out.println( miJuego.getNombre() );
@@ -20,9 +23,24 @@ public class MainJuego {
 		Juego miJuego4 = null;
 		miJuego3 = new Juego( "Monkey Island", 150 );
 		miJuego4 = new Juego( "Monkey Island", 150 );
+		if (miJuego3==miJuego4) {
+			System.out.println( "Juego 3 y 4 son ==" );
+		}
 		if (miJuego3.equals(miJuego4)) {
 			System.out.println( "Juego 3 y 4 son iguales" );
 		}
-		System.out.println( miJuego4 );
+		// Cómo hacer que se vea bien?
+		miJuego2.setGenero( Genero.PLATAFORMAS );
+		miJuego3.setGenero( Genero.AVENTURAS );
+		miJuego4.setGenero( Genero.AVENTURAS );
+		miJuego4.setPrecioFinal( 15.9999999 );
+		System.out.println( "Datos del juego: " + miJuego3 );  // .toString() no hace falta
+		System.out.println( "Datos del juego: " + miJuego4.toString() );
+		// this()
+		// static?
+		// Juego.numTotalHorasJugadas = 17;
+		miJuego4.setNumHorasJugadas( 200 );
+		System.out.println( Juego.getNumTotalHorasJugadas() );
+		// Géneros?
 	}
 }
