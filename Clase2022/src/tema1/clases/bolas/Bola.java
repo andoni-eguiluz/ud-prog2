@@ -5,8 +5,8 @@ import java.awt.Color;
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
 public class Bola {
-	private int x;
-	private int y;
+	private int xCentro;  // x del centro
+	private int yCentro;  // y del centro
 	private int vX;
 	private int vY;
 	private int radio;
@@ -14,8 +14,8 @@ public class Bola {
 	private Color colorBorde;
 	
 	public Bola(int x, int y, int vX, int vY, int radio, Color colorFondo, Color colorBorde) {
-		this.x = x;
-		this.y = y;
+		this.xCentro = x;
+		this.yCentro = y;
 		this.vX = vX;
 		this.vY = vY;
 		this.radio = radio;
@@ -45,19 +45,19 @@ public class Bola {
 	}
 
 	public int getX() {
-		return x;
+		return xCentro;
 	}
 
 	public void setX(int x) {
-		this.x = x;
+		this.xCentro = x;
 	}
 
 	public int getY() {
-		return y;
+		return yCentro;
 	}
 
 	public void setY(int y) {
-		this.y = y;
+		this.yCentro = y;
 	}
 
 	public int getvX() {
@@ -103,12 +103,12 @@ public class Bola {
 	@Override
 	public boolean equals(Object obj) {
 		Bola bola2 = (Bola) obj;
-		return this.x==bola2.x && this.y==bola2.y && this.colorBorde.equals(bola2.colorBorde);
+		return this.xCentro==bola2.xCentro && this.yCentro==bola2.yCentro && this.colorBorde.equals(bola2.colorBorde);
 	}
 
 	@Override
 	public String toString() {
-		return "Bola [x=" + x + ", y=" + y + ", radio=" + radio + "]";
+		return "Bola [x=" + xCentro + ", y=" + yCentro + ", radio=" + radio + "]";
 	}
 
 	public void dibujar( VentanaGrafica v ) {
@@ -117,6 +117,47 @@ public class Bola {
 	
 	public void borrar( VentanaGrafica v ) {
 		v.dibujaCirculo( this.getX(), this.getY(), this.getRadio(), 2.0f, Color.WHITE, Color.WHITE );
+	}
+	
+	// Pausa 10 msgs -> 100 fps -> 100 px/seg --> ¿cuánto avanzo en cada f? 1
+	// Pausa 40 msgs -> 25 fps ->                                           4
+	// Pausa x msgs  --> y fps ->                                           100/y = 100*x
+	public void mueveYRebota( VentanaGrafica v ) {
+		double tiempoSegs = 0.01;
+		long tiempoMsgs = (long) (tiempoSegs * 1000);
+		dibujar( v );
+		while (!v.estaCerrada()) {
+			borrar( v );  // 1. Borramos
+			// 2. Movemos
+			setX( (int) (getvX()*tiempoSegs) + getX() );  // x = x + vX;  // x += vX;
+			setY( (int) (getvY()*tiempoSegs) + getY() );
+			// 3. Detectamos choques
+			if (hayChoqueHorizontal(v)) {
+				vX = -vX;
+			}
+			if (hayChoqueVertical(v)) {
+				vY = -vY;
+			}
+			// 4. Dibujamos
+			dibujar( v );
+			// 5. Esperamos
+			v.espera( tiempoMsgs );
+			System.out.println( "Tiempo " + tiempoSegs + " - en milis " + tiempoMsgs + " x = " + xCentro );
+		}
+	}
+	
+	public boolean hayChoqueHorizontal(VentanaGrafica v) {
+		if (xCentro <= radio) {
+			return true;
+		}
+		if (xCentro >= v.getAnchura() - radio) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean hayChoqueVertical( VentanaGrafica v ) {
+		return (yCentro <= radio) || (yCentro >= v.getAltura() - radio);
 	}
 	
 }

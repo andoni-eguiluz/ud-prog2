@@ -5,10 +5,23 @@ import java.awt.Color;
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
 public class MainBolas {
+
+	private static VentanaGrafica v = null;
 	private static Bola bola1;
+	
 	public static void main(String[] args) {
 		// pruebas();
-		mover();
+		// mover();
+		rebotarBolas();
+	}
+	
+	private static void rebotarBolas() {
+		v = new VentanaGrafica( 1000, 600, "Bolitas" );
+		v.getJFrame().setLocation( 2000, 0 );  // Segunda pantalla
+		bola1 = new Bola( 200, 200, -500, 50, 25, Color.CYAN, Color.GREEN );
+		bola1.mueveYRebota( v );
+		Bola bola2 = new Bola(300, 300, 100, 100, 20, Color.BLUE, Color.YELLOW );
+		bola2.mueveYRebota( v );
 	}
 	
 	private static void mover() {
