@@ -5,8 +5,8 @@ import java.awt.Color;
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
 public class Bola {
-	private int xCentro;  // x del centro
-	private int yCentro;  // y del centro
+	private double xCentro;  // x del centro
+	private double yCentro;  // y del centro
 	private int vX;
 	private int vY;
 	private int radio;
@@ -44,19 +44,19 @@ public class Bola {
 		this( 100, 100, 0, 0, 10, Color.WHITE, Color.BLUE );
 	}
 
-	public int getX() {
+	public double getX() {
 		return xCentro;
 	}
-
-	public void setX(int x) {
+	
+	public void setX(double x) {
 		this.xCentro = x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return yCentro;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.yCentro = y;
 	}
 
@@ -119,18 +119,25 @@ public class Bola {
 		v.dibujaCirculo( this.getX(), this.getY(), this.getRadio(), 2.0f, Color.WHITE, Color.WHITE );
 	}
 	
-	// Pausa 10 msgs -> 100 fps -> 100 px/seg --> ¿cuánto avanzo en cada f? 1
-	// Pausa 40 msgs -> 25 fps ->                                           4
-	// Pausa x msgs  --> y fps ->                                           100/y = 100*x
+	// METODO BLOQUEANTE -- No devuelve el control de forma inmediata (OJO!)
+
+	// Cómo funciona tiempo y frecuencia de refresco?  Son inversos
+	// Por ejemplo si quiero moverme a 100 píxeles por segundo:
+	// Pausa 10 msgs = 0.010 sgs -> 100 fps -> ¿cuántos avanzo en cada f? 1
+	// Pausa 40 msgs = 0.040 sgs -> 25 fps ->                             4
+	// Pausa               x sgs -> y fps ->                              100/y = 100*x
 	public void mueveYRebota( VentanaGrafica v ) {
 		double tiempoSegs = 0.01;
 		long tiempoMsgs = (long) (tiempoSegs * 1000);
 		dibujar( v );
 		while (!v.estaCerrada()) {
+			// ESPERA
 			borrar( v );  // 1. Borramos
 			// 2. Movemos
-			setX( (int) (getvX()*tiempoSegs) + getX() );  // x = x + vX;  // x += vX;
-			setY( (int) (getvY()*tiempoSegs) + getY() );
+			System.out.println( "Antes " + getX() + "," + getY() + " - nuevo x = " + ((getvX()*tiempoSegs) + getX()) );
+			setX( (getvX()*tiempoSegs) + getX() );  // x = x + vX;  // x += vX;
+			setY( (getvY()*tiempoSegs) + getY() );
+			System.out.println( "Después " + getX() + "," + getY() );
 			// 3. Detectamos choques
 			if (hayChoqueHorizontal(v)) {
 				vX = -vX;
@@ -142,7 +149,7 @@ public class Bola {
 			dibujar( v );
 			// 5. Esperamos
 			v.espera( tiempoMsgs );
-			System.out.println( "Tiempo " + tiempoSegs + " - en milis " + tiempoMsgs + " x = " + xCentro );
+			// System.out.println( "Tiempo " + tiempoSegs + " - en milis " + tiempoMsgs + " x = " + xCentro );
 		}
 	}
 	

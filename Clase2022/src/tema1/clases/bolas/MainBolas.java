@@ -18,7 +18,7 @@ public class MainBolas {
 	private static void rebotarBolas() {
 		v = new VentanaGrafica( 1000, 600, "Bolitas" );
 		v.getJFrame().setLocation( 2000, 0 );  // Segunda pantalla
-		bola1 = new Bola( 200, 200, -500, 50, 25, Color.CYAN, Color.GREEN );
+		bola1 = new Bola( 200, 200, -900, 100, 25, Color.CYAN, Color.GREEN );
 		bola1.mueveYRebota( v );
 		Bola bola2 = new Bola(300, 300, 100, 100, 20, Color.BLUE, Color.YELLOW );
 		bola2.mueveYRebota( v );
