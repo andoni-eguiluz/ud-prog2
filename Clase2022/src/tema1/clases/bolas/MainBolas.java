@@ -11,9 +11,9 @@ public class MainBolas {
 	private static VentanaGrafica v = null;
 	private static Bola bola1;
 
-	// TODO
+	// TODO Lista-array de bolas
 	// Bola[] bolas
-	ArrayList<Bola> listaBolas = new ArrayList<Bola>();
+	// ArrayList<Bola> listaBolas = new ArrayList<Bola>();
 	
 	public static void main(String[] args) {
 		// pruebas();
@@ -36,7 +36,6 @@ public class MainBolas {
 				// Crear bola nueva
 				System.out.println( "Tecla +" );
 				bola3 = new Bola(v);
-				// listaBolas.add( bola3 );
 			}
 			// Mover y rebotar en bordes
 			bola1.mueveYRebota( v, tiempoSgs );
