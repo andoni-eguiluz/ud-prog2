@@ -1,6 +1,7 @@
 package tema1.clases.bolas;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.Random;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
@@ -237,6 +238,19 @@ public class Bola {
 		double ladoy = this.yCentro - otraBola.yCentro;
 		double dist = Math.sqrt( ladox*ladox + ladoy*ladoy );
 		return dist <= radio + otraBola.radio;
+	}
+
+	/** Comprueba si un punto de ventana está dentro
+	 * de la bola
+	 * @param punto Punto a comprobar
+	 * @return	true si está dentro, false si no
+	 */
+	public boolean contieneAPunto( Point punto ) {
+		// TODO
+		double ladox = xCentro - punto.x;
+		double ladoy = yCentro - punto.y;
+		double dist = Math.sqrt( ladox*ladox + ladoy*ladoy );
+		return dist <= radio;
 	}
 	
 }
