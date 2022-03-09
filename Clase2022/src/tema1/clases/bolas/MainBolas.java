@@ -3,7 +3,7 @@ package tema1.clases.bolas;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
