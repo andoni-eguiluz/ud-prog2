@@ -1,4 +1,4 @@
-package tema2.ejemplos.runner;
+package tema2.resueltos.runner;
 import java.awt.Color;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
@@ -43,7 +43,7 @@ public class Nave extends ObjetoEspacial {
 	
 	/** Mueve la nave y modifica el tiempo de protección (si procede)
 	 * @param	segs	Tiempo de movimiento (se resta al tiempo de protección)
-	 * @see tema2.ejemplos.runner.ObjetoEspacial#mueve(double)
+	 * @see tema2.resueltos.runner.ObjetoEspacial#mueve(double)
 	 */
 	@Override
 	public void mueve(double segs) {

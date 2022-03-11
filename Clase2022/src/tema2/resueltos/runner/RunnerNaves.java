@@ -1,4 +1,4 @@
-package tema2.ejemplos.runner;
+package tema2.resueltos.runner;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
