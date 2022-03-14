@@ -16,18 +16,7 @@ public class AnimacionBolasBloques {
 	 */
 	public static void main(String[] args) {
 		AnimacionBolasBloques anim1 = new AnimacionBolasBloques(1000, 600, "Brick Breaker" );
-		// v.getJFrame().setLocation( 2000, 100 );  // Si se tienen dos pantallas
-		for (int i=0; i<8; i++) {
-			anim1.gBolas.add( new Bola( 750 + i*30, 280 + i*45, 15, -1200, -1800, Color.GREEN, new Color( i*30, 255 - i*30, 255 ) ) );
-		}
-		for (int i=0; i<3; i++) {
-			anim1.gBloques.add( new Bloque( i*200+50, 200, 98, 40, 0, 0, Color.BLUE, Color.YELLOW ) );
-			anim1.gBloques.add( new Bloque( i*200+150, 200, 98, 40, 0, 0, Color.BLACK, Color.WHITE ) );
-		}
-		for (int i=0; i<3; i++) {
-			anim1.gBloques.add( new Bloque( i*200+250, 60, 98, 40, 0, 0, Color.RED, Color.GREEN ) );
-			anim1.gBloques.add( new Bloque( i*200+350, 60, 98, 40, 0, 0, Color.MAGENTA, Color.ORANGE ) );
-		}
+		anim1.init();
 		// (Para este juego las bolas no chocan entre sí)
 		anim1.setBolasChocan( false );
 		anim1.buclePrincipal();
@@ -53,6 +42,22 @@ public class AnimacionBolasBloques {
 	public AnimacionBolasBloques( int ancho, int alto, String titulo ) {
 		v = new VentanaGrafica( ancho, alto, titulo, Color.WHITE );
 		v.setMensaje( "<Esc> para acabar, <+> para añadir bola, <P> para pausa, <Esp> para fotograma");
+	}
+	
+	/** Inicializa un ejemplo de animación con unos cuantos bloques y bolas rebotando
+	 */
+	public void init() {
+		for (int i=0; i<8; i++) {
+			gBolas.add( new Bola( 750 + i*30, 280 + i*45, 15, -1200, -1800, Color.GREEN, new Color( i*30, 255 - i*30, 255 ) ) );
+		}
+		for (int i=0; i<3; i++) {
+			gBloques.add( new Bloque( i*200+50, 200, 98, 40, 0, 0, Color.BLUE, Color.YELLOW ) );
+			gBloques.add( new Bloque( i*200+150, 200, 98, 40, 0, 0, Color.BLACK, Color.WHITE ) );
+		}
+		for (int i=0; i<3; i++) {
+			gBloques.add( new Bloque( i*200+250, 60, 98, 40, 0, 0, Color.RED, Color.GREEN ) );
+			gBloques.add( new Bloque( i*200+350, 60, 98, 40, 0, 0, Color.MAGENTA, Color.ORANGE ) );
+		}
 	}
 	
 	/** Cambia la configuración de choque de bolas
