@@ -42,7 +42,7 @@ public class AnimacionBolasBloques {
 	 */
 	public AnimacionBolasBloques( int ancho, int alto, String titulo ) {
 		v = new VentanaGrafica( ancho, alto, titulo, Color.WHITE );
-		v.getJFrame().setLocation( 2000, 0 );
+		// v.getJFrame().setLocation( 2000, 0 );  // Segunda pantalla
 		v.setMensaje( "<Esc> para acabar, <+> para añadir bola, <P> para pausa, <Esp> para fotograma");
 	}
 	
