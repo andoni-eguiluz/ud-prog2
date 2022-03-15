@@ -32,5 +32,5 @@ public class BloqueRompible extends Bloque {
 		Font tipo = new Font( "Arial", Font.PLAIN, 40 );
 		v.dibujaTextoCentrado( x-ancho/2, y-alto/2, ancho, alto, vida + "", tipo, Color.BLACK, true );
 	}
-	
+
 }
