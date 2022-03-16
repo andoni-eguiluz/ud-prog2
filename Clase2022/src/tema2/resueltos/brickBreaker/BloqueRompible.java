@@ -27,10 +27,27 @@ public class BloqueRompible extends Bloque {
 	
 	@Override
 	public void dibujar(VentanaGrafica v) {
-		super.dibujar(v);  // Dibuja el bloque (como lo hace la clase padre)
-		// Dibujar el texto
-		Font tipo = new Font( "Arial", Font.PLAIN, 40 );
-		v.dibujaTextoCentrado( x-ancho/2, y-alto/2, ancho, alto, vida + "", tipo, Color.BLACK, true );
+		if (vida>0) {
+			super.dibujar(v);  // Dibuja el bloque (como lo hace la clase padre)
+			// Dibujar el texto
+			Font tipo = new Font( "Arial", Font.PLAIN, 40 );
+			v.dibujaTextoCentrado( x-ancho/2, y-alto/2, ancho, alto, vida + "", tipo, Color.BLACK, true );
+		}
 	}
 
+		private ObjetoAnimacion bolaDeChoque = null;
+	@Override
+	public boolean chocaCon(ObjetoAnimacion objeto2) {
+		boolean hayChoque = super.chocaCon(objeto2);
+		if (hayChoque) {
+			if (objeto2!=bolaDeChoque) {
+				vida--;
+			}
+			bolaDeChoque = objeto2;
+			System.out.println( "Consulta " + objeto2 );
+		}
+		return hayChoque;
+	}
+
+	
 }
