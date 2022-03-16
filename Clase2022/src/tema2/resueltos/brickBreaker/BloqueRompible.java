@@ -44,7 +44,7 @@ public class BloqueRompible extends Bloque {
 				vida--;
 			}
 			bolaDeChoque = objeto2;
-			System.out.println( "Consulta " + objeto2 );
+			// System.out.println( "Consulta " + objeto2 );
 		}
 		return hayChoque;
 	}
