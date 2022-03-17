@@ -50,7 +50,9 @@ public class AnimacionBolasBloques {
 	 */
 	public void init() {
 		for (int i=0; i<8; i++) {
-			gBolas.add( new Bola( 750 + i*30, 280 + i*45, 15, -1200, -1800, Color.GREEN, new Color( i*30, 255 - i*30, 255 ) ) );
+			Bola bola = new Bola( 750 + i*30, 280 + i*45, 15, -1200, -1800, Color.GREEN, new Color( i*30, 255 - i*30, 255 ) );
+			bola.setVisuVel(true);
+			gBolas.add( bola );
 		}
 		for (int i=0; i<3; i++) {
 			gBloques.add( new Bloque( i*200+50, 200, 98, 40, 0, 0, Color.BLUE, Color.YELLOW ) );
@@ -60,7 +62,7 @@ public class AnimacionBolasBloques {
 			gBloques.add( new Bloque( i*200+250, 60, 98, 40, 0, 0, Color.RED, Color.GREEN ) );
 			gBloques.add( new Bloque( i*200+350, 60, 98, 40, 0, 0, Color.MAGENTA, Color.ORANGE ) );
 		}
-		BloqueRompible br = new BloqueRompible( 50, 40, Color.YELLOW, Color.CYAN, 100 );
+		BloqueRompible br = new BloqueRompible( 50, 40, Color.YELLOW, Color.CYAN, 20 );
 		gBloques.add( br );
 	}
 	

@@ -9,9 +9,6 @@ import java.util.Random;
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
 public class Bola extends ObjetoAnimacion {
-	// Parte static
-	private static final Random random = new Random();  // Generador de aleatorios (1 para todas las bolas)
-	private static final Color[] colores = { Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.BLACK };  // Array de colores aleatorios de la bola
 	// Otra manera de inicializar los estáticos (a veces no se puede inicializar en la misma línea de la declaración, o hay que hacer más cosas):
 	//	static {
 	//		random = new Random(); 
