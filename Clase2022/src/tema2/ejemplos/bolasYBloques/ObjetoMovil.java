@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public abstract class ObjetoAnimacion extends Object {
+public abstract class ObjetoMovil extends Object {
 	protected double x;              // Coordenada x del centro del objeto
 	protected double y;              // Coordenada y del centro del objeto
 	protected double antX;           // Coordenada x del centro en el movimiento anterior (método mover)
@@ -24,7 +24,7 @@ public abstract class ObjetoAnimacion extends Object {
 	 * @param x	Coordenada x del centro
 	 * @param y	Coordenada y del centro
 	 */
-	public ObjetoAnimacion( double x, double y ) {
+	public ObjetoMovil( double x, double y ) {
 		this( x, y, Color.BLUE, Color.WHITE );
 	}
 
@@ -34,7 +34,7 @@ public abstract class ObjetoAnimacion extends Object {
 	 * @param colorBorde	Color del borde
 	 * @param colorFondo	Color del fondo
 	 */
-	public ObjetoAnimacion(double x, double y, Color colorBorde, Color colorFondo) {
+	public ObjetoMovil(double x, double y, Color colorBorde, Color colorFondo) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -249,7 +249,7 @@ public abstract class ObjetoAnimacion extends Object {
 	 * @param objeto2	Objeto de animación con el que comprobar choque
 	 * @return	true si se tocan este objeto y objeto2, false en caso contrario
 	 */
-	public abstract boolean chocaCon( ObjetoAnimacion objeto2 );
+	public abstract boolean chocaCon( ObjetoMovil objeto2 );
 	
 	/** Informa si el objeto contiene un punto de la ventana
 	 * @param punto	Punto a consultar
@@ -261,7 +261,7 @@ public abstract class ObjetoAnimacion extends Object {
 	 * @param objeto2	Objeto con el que probar el choque
 	 * @return	Devuelve null si no chocan, un vector con forma de punto indicando el ángulo y amplitud del choque sobre el objeto en curso
 	 */
-	public abstract Polar vectorChoqueConObjeto( ObjetoAnimacion objeto2 );
+	public abstract Polar vectorChoqueConObjeto( ObjetoMovil objeto2 );
 
 	/** Calcula el área del objeto, partiendo de su información de radio
 	 * @return	Área del objeto

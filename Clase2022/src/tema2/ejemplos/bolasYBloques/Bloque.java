@@ -8,7 +8,7 @@ import java.util.Random;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public class Bloque extends ObjetoAnimacion {
+public class Bloque extends ObjetoMovil {
 	// Parte static
 	private static final Random random = new Random();  // Generador de aleatorios (1 para todos los bloques)
 	private static final Color[] colores = { Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.BLACK };  // Array de colores aleatorios del bloque
@@ -147,7 +147,7 @@ public class Bloque extends ObjetoAnimacion {
 	}
 	
 	@Override
-	public boolean chocaCon( ObjetoAnimacion objeto2 ) {
+	public boolean chocaCon( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bloque) {
 			Bloque bloque2 = (Bloque) objeto2;
 			double distCentrosX = Math.abs( x-bloque2.x );
@@ -167,7 +167,7 @@ public class Bloque extends ObjetoAnimacion {
 	}
 	
 	@Override
-	public Polar vectorChoqueConObjeto( ObjetoAnimacion objeto2 ) {
+	public Polar vectorChoqueConObjeto( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bola) {
 			Bola bola = (Bola) objeto2;
 			double distCentrosX = x-bola.getX();
