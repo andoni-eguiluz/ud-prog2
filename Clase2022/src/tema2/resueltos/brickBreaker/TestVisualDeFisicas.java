@@ -15,12 +15,12 @@ public class TestVisualDeFisicas {
 	private static VentanaGrafica v;
 	
 	// Lógica de juego
-	private static GrupoObjetosAnimacion gObjetos = new GrupoObjetosAnimacion();
+	private static GrupoObjetosMoviles gObjetos = new GrupoObjetosMoviles();
 	private static int milisEntreFrames = 10;    // Milisegundos entre frames
 	private static boolean avanceFot = false;    // Avance de un fotograma
 	private static boolean pausa = true;         // Pausa del juego
 	private static Point ultRatonPulsado = null; // Última pulsación de ratón
-	private static ObjetoAnimacion ultObjetoArrastrado; // Último objeto al que se ha hecho drag
+	private static ObjetoMovil ultObjetoArrastrado; // Último objeto al que se ha hecho drag
 	private static Color colorColision = Color.MAGENTA;
 	
 	/** Método principal
@@ -30,7 +30,7 @@ public class TestVisualDeFisicas {
 		v = new VentanaGrafica( 1000, 600, "Chequeo de físicas", Color.WHITE );
 		// v.getJFrame().setLocation( 2000, 100 );  // Si se tienen dos pantallas
 		v.setMensaje( "<Esc> para acabar, <P> para quitar pausa, drag mueve objeto, ctrl+drag cambia velocidad");
-		ObjetoAnimacion obj = new Bola( 521, 300, 15, -160, -240, Color.GREEN, Color.CYAN );
+		ObjetoMovil obj = new Bola( 521, 300, 15, -160, -240, Color.GREEN, Color.CYAN );
 		obj.setVisuVel( true );
 		gObjetos.add( obj );
 		obj = new Bola( 300, 200, 45, 100, 200, Color.PINK, Color.LIGHT_GRAY );
@@ -69,9 +69,9 @@ public class TestVisualDeFisicas {
 			gObjetos.dibujar( v );
 			// Dibujado de colisiones
 			for (int i=0; i<gObjetos.size(); i++) {
-				ObjetoAnimacion o1 = gObjetos.get(i);
+				ObjetoMovil o1 = gObjetos.get(i);
 				for (int j=0; j<gObjetos.size(); j++) {
-					ObjetoAnimacion o2 = gObjetos.get(j);
+					ObjetoMovil o2 = gObjetos.get(j);
 					if (o1 != o2) {
 						Polar choquePolar = o1.vectorChoqueConObjeto(o2);
 						if (choquePolar!=null) {

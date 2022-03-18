@@ -8,7 +8,10 @@ import java.util.Random;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public class Bola extends ObjetoAnimacion {
+public class Bola extends ObjetoMovil {
+	// Parte static
+	private static final Random random = new Random();  // Generador de aleatorios (1 para todas las bolas)
+	private static final Color[] colores = { Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.BLACK };  // Array de colores aleatorios de la bola
 	// Otra manera de inicializar los estáticos (a veces no se puede inicializar en la misma línea de la declaración, o hay que hacer más cosas):
 	//	static {
 	//		random = new Random(); 
@@ -130,7 +133,12 @@ public class Bola extends ObjetoAnimacion {
 	}
 	
 	@Override
-	public boolean chocaCon( ObjetoAnimacion objeto2 ) {
+	public boolean esChocable() {
+		return true;
+	}
+	
+	@Override
+	public boolean chocaCon( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bola) {
 			Bola bola2 = (Bola) objeto2;
 			double distCentros = Math.sqrt( (x-bola2.x)*(x-bola2.x) + (y-bola2.y)*(y-bola2.y) );
@@ -148,7 +156,7 @@ public class Bola extends ObjetoAnimacion {
 	}
 
 	@Override
-	public Polar vectorChoqueConObjeto( ObjetoAnimacion objeto2 ) {
+	public Polar vectorChoqueConObjeto( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bloque) {
 			Polar ret = ((Bloque)objeto2).vectorChoqueConObjeto(this);
 			if (ret!=null) {
@@ -195,5 +203,5 @@ public class Bola extends ObjetoAnimacion {
 	public String toString() {
 		return String.format( "[Bola (%.2f,%.2f) r=%.1f v=(%.4f,%.4f)]", x, y, radio, velX, velY );
 	}
-		
+
 }

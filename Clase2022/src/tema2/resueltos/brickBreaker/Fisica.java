@@ -69,7 +69,7 @@ public class Fisica {
 	 * @param milis	Milisegundos que pasan en el paso de movimiento
 	 * @param visualizarChoque	(opcional) true para visualizar la info del choque en la ventana y en consola
 	 */
-	public static void calcChoqueEntreObjetos( VentanaGrafica ventana, ObjetoAnimacion objeto1, ObjetoAnimacion objeto2, double milis, boolean... visualizarChoque ) {
+	public static void calcChoqueEntreObjetos( VentanaGrafica ventana, ObjetoMovil objeto1, ObjetoMovil objeto2, double milis, boolean... visualizarChoque ) {
 		if (objeto1 instanceof Bola && objeto2 instanceof Bola) {
 			calcChoqueEntreObjetos( ventana, (Bola) objeto1, (Bola) objeto2, milis, visualizarChoque.length>0 && visualizarChoque[0] );
 		} else if (objeto1 instanceof Bloque && objeto2 instanceof Bloque) {
@@ -221,7 +221,7 @@ public class Fisica {
 	 * @param milis	Milisegundos que pasan en el paso de movimiento, permite calcular las correcciones de choque por física de baja precisión (la bola se mete "dentro" del rectángulo)
 	 */
 	public static void calcChoqueEntreObjetos( VentanaGrafica ventana, Bloque bloque, Bola bola, double milis ) {
-		ArrayList<ObjetoAnimacion> l = new ArrayList<>(); l.add( bloque ); 
+		ArrayList<ObjetoMovil> l = new ArrayList<>(); l.add( bloque ); 
 		calcChoqueMultipleEntreObjetos( ventana, bola, l, milis);
 		/* Implementación con iteraciones pequeñas... se ha sustituido por la (mejor) implementación por aproximaciones sucesivas de varios bloques
 		// Para calcular la física de colisión necesitamos saber el punto aproximado en el que ocurrió la colisión: en función de eso cambiarán de una forma o de otra las velocidades
@@ -305,7 +305,7 @@ public class Fisica {
 	 * @param objetoA	objeto que choca con comportamiento perfectamente elástico (debe ser instancia de Bola o Bloque)
 	 * @param milis	Milisegundos que pasan en el paso de movimiento, permite calcular las correcciones de choque por física de alta precisión (evitando que la bola se meta "dentro" del borde)
 	 */
-	public static void calcChoqueConBorde( Rectangle rect, ObjetoAnimacion objetoA, double milis ) {
+	public static void calcChoqueConBorde( Rectangle rect, ObjetoMovil objetoA, double milis ) {
 		if (objetoA instanceof Bola) {
 			calcChoqueConBorde( rect, (Bola) objetoA, milis );
 		} else if (objetoA instanceof Bloque) {
@@ -386,14 +386,14 @@ public class Fisica {
 	 * @param lBloques	Lista de objetos (DEBEN SER bloques) con los que choca la bola. Los bloques tienen consideración de masa infinita (su velocidad no se ve afectada)
 	 * @param milis	Milisegundos que pasan en el paso de movimiento, permite calcular las correcciones de choque por física de alta precisión (evitando que la bola se meta "dentro" de los bloques)
 	 */
-	public static void calcChoqueMultipleEntreObjetos( VentanaGrafica ventana, ObjetoAnimacion bola, ArrayList<ObjetoAnimacion> lBloques, double milis ) {
-		if (lBloques.isEmpty() || !lBloques.get(0).chocaCon(bola)) {  // No chocan desde el principio: este método no tiene nada que hacer
+	public static void calcChoqueMultipleEntreObjetos( VentanaGrafica ventana, ObjetoMovil bola, ArrayList<ObjetoMovil> lBloques, double milis ) {
+		if (lBloques.isEmpty() || !(lBloques.get(0) instanceof ObjetoMovil) || !((ObjetoMovil)lBloques.get(0)).chocaCon(bola)) {  // No chocan desde el principio: este método no tiene nada que hacer
 			return;
 		}
 		if (!(bola instanceof Bola)) return;  // No funciona si no es una bola
-		for (ObjetoAnimacion oa : lBloques) if (!(oa instanceof Bloque)) return;  // No funciona si no son bloques
+		for (ObjetoMovil oa : lBloques) if (!(oa instanceof Bloque)) return;  // No funciona si no son bloques
 		ArrayList<Bloque> nuevaLista = new ArrayList<Bloque>();
-		for (ObjetoAnimacion oa : lBloques) nuevaLista.add( (Bloque) oa );
+		for (ObjetoMovil oa : lBloques) nuevaLista.add( (Bloque) oa );
 		iteracionChoqueBolaBloques(ventana, (Bola) bola, new ArrayList<Bloque>(nuevaLista), nuevaLista, milis, 1);
 	}
 

@@ -8,7 +8,10 @@ import java.util.Random;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public class Bloque extends ObjetoAnimacion {
+public class Bloque extends ObjetoMovil {
+	// Parte static
+	protected static final Random random = new Random();  // Generador de aleatorios (1 para todos los bloques)
+	protected static final Color[] colores = { Color.YELLOW, Color.RED, Color.GREEN, Color.BLUE, Color.CYAN, Color.MAGENTA, Color.BLACK };  // Array de colores aleatorios del bloque
 	
 	// Parte no static
 	
@@ -37,9 +40,9 @@ public class Bloque extends ObjetoAnimacion {
 
 	/** Crea un bloque nuevo en las coordenadas 0,0 de ancho y alto 10, borde azul y fondo blanco
 	 */
-//	public Bloque() {
-//		this( 0, 0, 10, 10, Color.BLUE, new Color(255,255,255) );
-//	}
+	public Bloque() {
+		this( 0, 0, 10, 10, Color.BLUE, new Color(255,255,255) );
+	}
 	
 	/** Crea un bloque nuevo
 	 * @param x	Coordenada x del centro
@@ -142,9 +145,14 @@ public class Bloque extends ObjetoAnimacion {
 	public boolean chocaBordeHorizontal( Rectangle rect ) {
 		return x-ancho/2 <= 0 || x+ancho/2 >= rect.width;
 	}
+
+	@Override
+	public boolean esChocable() {
+		return true;
+	}
 	
 	@Override
-	public boolean chocaCon( ObjetoAnimacion objeto2 ) {
+	public boolean chocaCon( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bloque) {
 			Bloque bloque2 = (Bloque) objeto2;
 			double distCentrosX = Math.abs( x-bloque2.x );
@@ -164,7 +172,7 @@ public class Bloque extends ObjetoAnimacion {
 	}
 	
 	@Override
-	public Polar vectorChoqueConObjeto( ObjetoAnimacion objeto2 ) {
+	public Polar vectorChoqueConObjeto( ObjetoMovil objeto2 ) {
 		if (objeto2 instanceof Bola) {
 			Bola bola = (Bola) objeto2;
 			double distCentrosX = x-bola.getX();
@@ -326,5 +334,5 @@ public class Bloque extends ObjetoAnimacion {
 	public String toString() {
 		return "[Bloque (" + x + "," + y + ") t=" + ancho + "," + alto + "]";
 	}
-	
+
 }

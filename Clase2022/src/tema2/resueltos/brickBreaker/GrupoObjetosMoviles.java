@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public class GrupoObjetosAnimacion {
-	private ArrayList<ObjetoAnimacion> lOAs;
+public class GrupoObjetosMoviles {
+	private ArrayList<ObjetoMovil> lOAs;
 	
 	/** Crea un nuevo grupo de objetos de animación
 	 */
-	public GrupoObjetosAnimacion() {
+	public GrupoObjetosMoviles() {
 		lOAs = new ArrayList<>();
 	}
 	
@@ -20,7 +20,7 @@ public class GrupoObjetosAnimacion {
 	 * @param indice	Posición del objeto (de 0 a size-1)
 	 * @return	objeto de esa posición
 	 */
-	public ObjetoAnimacion get( int indice ) {
+	public ObjetoMovil get( int indice ) {
 		return lOAs.get(indice);
 	}
 	
@@ -34,7 +34,7 @@ public class GrupoObjetosAnimacion {
 	/** Añade un bloque nuevo al grupo
 	 * @param bola	Bloque a añadir
 	 */
-	public void add( ObjetoAnimacion objetoA ) {
+	public void add( ObjetoMovil objetoA ) {
 		lOAs.add( objetoA );
 	}
 	
@@ -49,7 +49,7 @@ public class GrupoObjetosAnimacion {
 	 * @param objetoA	Bloque a buscar
 	 * @return	Si se encuentra un bloque igual a este (equals), se devuelve su posición de índice. Si no se encuentra, se devuelve -1
 	 */
-	public int buscar( ObjetoAnimacion objetoA ) {
+	public int buscar( ObjetoMovil objetoA ) {
 		return lOAs.indexOf( objetoA );
 	}
 	
@@ -58,7 +58,7 @@ public class GrupoObjetosAnimacion {
 	 */
 	public double getEnergia() {
 		double energia = 0;
-		for (ObjetoAnimacion objetoA : lOAs) energia += objetoA.getEnergia();
+		for (ObjetoMovil objetoA : lOAs) energia += objetoA.getEnergia();
 		return energia;
 	}
 	
@@ -66,7 +66,7 @@ public class GrupoObjetosAnimacion {
 	 * @param v	Ventana en la que borrar
 	 */
 	public void borrar( VentanaGrafica v ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			objetoA.borrar( v );
 		}
 	}
@@ -75,7 +75,7 @@ public class GrupoObjetosAnimacion {
 	 * @param v	Ventana en la que dibujar
 	 */
 	public void dibujar( VentanaGrafica v ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			objetoA.dibujar(v);
 		}
 	}
@@ -84,7 +84,7 @@ public class GrupoObjetosAnimacion {
 	 * @param milis	Milisegundos de tiempo a mover
 	 */
 	public void mover( int milis ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			objetoA.mover( milis );
 		}
 	}
@@ -93,8 +93,8 @@ public class GrupoObjetosAnimacion {
 	 * @param punto	Punto de la ventana (x,y)
 	 * @return	Objeto que contiene ese punto, null si no hay ninguno
 	 */
-	public ObjetoAnimacion getObjetoEnPunto( Point punto ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+	public ObjetoMovil getObjetoEnPunto( Point punto ) {
+		for (ObjetoMovil objetoA : lOAs) {
 			if (objetoA.contienePunto(punto)) {
 				return objetoA;
 			}
@@ -107,7 +107,7 @@ public class GrupoObjetosAnimacion {
 	 * @param milisEntreFrames	Milisegundos del último movimiento
 	 */
 	public void choqueBordes( VentanaGrafica v, double milisEntreFrames ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			if (objetoA.chocaBordeHorizontal(v) || objetoA.chocaBordeVertical(v)) {
 				Fisica.calcChoqueConBorde( new Rectangle(v.getAnchura(), v.getAltura()), objetoA, milisEntreFrames );
 			}
@@ -119,7 +119,7 @@ public class GrupoObjetosAnimacion {
 	 * @param milisEntreFrames	Milisegundos del último movimiento
 	 */
 	public void choqueBordes( Rectangle rect, double milisEntreFrames ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			if (objetoA.chocaBordeHorizontal(rect) || objetoA.chocaBordeVertical(rect)) {
 				Fisica.calcChoqueConBorde(rect, objetoA, milisEntreFrames );
 			}
@@ -132,9 +132,9 @@ public class GrupoObjetosAnimacion {
 	 */
 	public void choqueEntreObjetos( VentanaGrafica v, int milis ) {
 		for (int i=0; i<lOAs.size(); i++) {
-			ObjetoAnimacion objetoA = lOAs.get(i);
+			ObjetoMovil objetoA = lOAs.get(i);
 			for (int j=i+1; j<lOAs.size(); j++) {
-				ObjetoAnimacion objetoA2 = lOAs.get(j);
+				ObjetoMovil objetoA2 = lOAs.get(j);
 				Fisica.calcChoqueEntreObjetos( v, objetoA, objetoA2, milis*1.0 );
 			}
 		}
@@ -145,11 +145,11 @@ public class GrupoObjetosAnimacion {
 	 * @param milis	Milisegundos del último movimiento
 	 * @param gObjetos	Grupo de otros objetos a comprobar
 	 */
-	public void choqueConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosAnimacion gObjetos ) {
+	public void choqueConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosMoviles gObjetos ) {
 		for (int i=0; i<lOAs.size(); i++) {
-			ObjetoAnimacion objetoA = lOAs.get(i);
+			ObjetoMovil objetoA = lOAs.get(i);
 			for (int j=0; j<gObjetos.size(); j++) {
-				ObjetoAnimacion objetoA2 = gObjetos.get(j);
+				ObjetoMovil objetoA2 = gObjetos.get(j);
 				Fisica.calcChoqueEntreObjetos( v, objetoA, objetoA2, milis*1.0 );
 			}
 		}
@@ -161,20 +161,39 @@ public class GrupoObjetosAnimacion {
 	 * @param v	Ventana en la que comprobar choques
 	 * @param milis	Milisegundos del último movimiento
 	 * @param gObjetos	Grupo de otros objetos a comprobar
+	 * @return	Puntuación que ocurre en este choque
 	 */
-	public void choqueMultipleConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosAnimacion gObjetos ) {
+	public int choqueMultipleConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosMoviles gObjetos ) {
+		int numChoques = 0;
 		for (int i=0; i<lOAs.size(); i++) {
-			ObjetoAnimacion objetoA = lOAs.get(i);
-			ArrayList<ObjetoAnimacion> lChoques = new ArrayList<>();
+			ObjetoMovil objetoA = lOAs.get(i);
+			if (!(objetoA instanceof ObjetoMovil) || !((ObjetoMovil)objetoA).esChocable()) {
+				continue;  // No se procesa el objeto si no es chocable
+			}
+			ArrayList<ObjetoMovil> lChoques = new ArrayList<>();
 			for (int j=0; j<gObjetos.size(); j++) {
-				ObjetoAnimacion objetoA2 = gObjetos.get(j);
-				if (objetoA.chocaCon( objetoA2 )) {
-					lChoques.add( objetoA2 );
+				ObjetoMovil objetoA2 = gObjetos.get(j);
+				if (objetoA2 instanceof ObjetoMovil && ((ObjetoMovil)objetoA2).esChocable()) {
+					if (((ObjetoMovil)objetoA2).chocaCon( objetoA )) {
+						lChoques.add( objetoA2 );
+					}
+				} else if (objetoA2 instanceof PowerupRompeLadrillos) {
+					if (((PowerupRompeLadrillos)objetoA2).chocaCon( objetoA )) {
+						numChoques += 10;  // Puntuamos +1 cada fotograma que hay uso del powerup (mejorable)
+					}
 				}
 			}
 			// Resolver choque con bloques múltiples
 			Fisica.calcChoqueMultipleEntreObjetos( v, objetoA, lChoques, milis*1.0 );
+			// Quitar vida y sumar puntos
+			for (ObjetoMovil oa : lChoques) {
+				if (oa instanceof BloqueRompible) {
+					((BloqueRompible) oa).decVida();
+					numChoques++;
+				}
+			}
 		}
+		return numChoques;
 	}
 
 	/** Corrige posiciones de los bloques del grupo que puedan estar incrustados en los bordes tras rebotes
@@ -192,7 +211,7 @@ public class GrupoObjetosAnimacion {
 	 * @param rect	Rectángulo máximo de bordes
 	 */
 	public void correccionBordes( Rectangle rect ) {
-		for (ObjetoAnimacion objetoA : lOAs) {
+		for (ObjetoMovil objetoA : lOAs) {
 			if (objetoA.chocaBordeVertical(rect)) {
 				Rectangle2D dimensiones = objetoA.getRectangulo();
 				if (dimensiones.getMinY() < 0) {  // Arriba
