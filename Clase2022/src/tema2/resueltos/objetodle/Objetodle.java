@@ -64,13 +64,16 @@ public class Objetodle extends VentanaGrafica {
 		finFracaso = false;
 		dibujaTablero();
 		while (!estaCerrada() && !finExito && !finFracaso ) {
-			input();
-			dibujaTablero();
+			boolean hayInput = input();
+			if (hayInput) {  // Si no hay input no hay que redibujar el tablero
+				dibujaTablero();
+			}
 			espera(50);
 		}
 	}
 	
-	private void input() {
+	private boolean input() {
+		boolean hayInput = false;
 		Point click = getRatonPulsado();
 		if (click==null) {
 			ultimoClick = null;
@@ -79,10 +82,12 @@ public class Objetodle extends VentanaGrafica {
 			for (Elemento tecla : opciones.getOpciones()) {
 				if (tecla.estaPuntoDentro( click )) {
 					procesaTecla( tecla );
+					hayInput = true;
 					break;
 				}
 			}
 		}
+		return hayInput;
 	}
 	
 	private void procesaTecla( Elemento tecla ) {
@@ -111,7 +116,6 @@ public class Objetodle extends VentanaGrafica {
 	private void dibujaTablero() {
 		// Dibujo de teclado
 		dibujaLinea( 0, yTeclado, getAnchura(), yTeclado, 2f, Color.BLACK );
-		int indiceTecla = 0;
 		int yLinea = yTeclado + pixelsMargen;
 		ArrayList<Elemento> lTeclas = new ArrayList<Elemento>( opciones.getOpciones() );
 		do {
