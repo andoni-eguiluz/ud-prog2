@@ -74,6 +74,7 @@ public class Objetodle extends VentanaGrafica {
 	
 	private boolean input() {
 		boolean hayInput = false;
+		// Proceso de ratón
 		Point click = getRatonPulsado();
 		if (click==null) {
 			ultimoClick = null;
@@ -81,6 +82,18 @@ public class Objetodle extends VentanaGrafica {
 			ultimoClick = click;
 			for (Elemento tecla : opciones.getOpciones()) {
 				if (tecla.estaPuntoDentro( click )) {
+					procesaTecla( tecla );
+					hayInput = true;
+					break;
+				}
+			}
+		}
+		// Proceso de teclado (equivalente a hacer click con el ratón)
+		int codTecla = getCodUltimaTeclaTecleada();
+		if (codTecla!=0) {
+			char teclaPulsada = (char) codTecla;  // El código es el ASCII del carácter, pero ojo, las letras en mayúsculas
+			for (Elemento tecla : opciones.getOpciones()) {
+				if ((tecla.aCaracter() + "").toUpperCase().equals( teclaPulsada+"" )) {  // Si coincide el carácter de la tecla-elemento con la tecla-teclado pulsada
 					procesaTecla( tecla );
 					hayInput = true;
 					break;

@@ -1,11 +1,13 @@
 package tema2.resueltos.objetodle;
 
 public class Color extends Elemento {
-	java.awt.Color color;
+	java.awt.Color color;  // Color del elemento
+	private char codigo;   // Para simplificar la visualización resumida del elemento
 	
-	public Color( EstadoElemento estado, java.awt.Color color ) {
+	public Color( EstadoElemento estado, java.awt.Color color, char codigo ) {
 		super( estado );
 		this.color = color;
+		this.codigo = codigo;
 	}
 	
 	@Override
@@ -21,7 +23,7 @@ public class Color extends Elemento {
 	}
 
 	public Elemento duplicar() {
-		Color c = new Color( estado, color );
+		Color c = new Color( estado, color, codigo );
 		c.x = x;
 		c.y = y;
 		c.tam = tam;
@@ -30,6 +32,11 @@ public class Color extends Elemento {
 		return c;
 	}
 
+	@Override
+	public char aCaracter() {
+		return codigo;
+	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Color) {

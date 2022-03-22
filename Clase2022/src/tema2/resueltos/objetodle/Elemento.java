@@ -82,5 +82,10 @@ public abstract class Elemento {
 	 * @return	Devuelve nuevo elemento duplicado
 	 */
 	public abstract Elemento duplicar();
+
+	/** Devuelve un carácter representativo de cada elemento particular, para poder visualizarlo de forma resumida
+	 * @return	Carácter representando ese elemento
+	 */
+	public abstract char aCaracter();
 	
 }

@@ -69,4 +69,16 @@ public class Combi {
 		}
 		return contIguales == numMaxElementos;
 	}
+	
+	/** Devuelve el código de caracteres en forma de string de esta combinación
+	 * @return	Caracteres combinados en un string
+	 */
+	public String aString() {
+		String ret = "";
+		for (Elemento e : lista) {
+			ret += e.aCaracter();
+		}
+		return ret;
+	}
+
 }

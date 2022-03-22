@@ -35,6 +35,11 @@ public class Letra extends Elemento {
 	}
 
 	@Override
+	public char aCaracter() {
+		return letra;
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Letra) {
 			Letra l = (Letra) obj;

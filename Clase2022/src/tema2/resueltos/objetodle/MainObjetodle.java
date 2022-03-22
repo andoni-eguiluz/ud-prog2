@@ -32,15 +32,15 @@ public class MainObjetodle {
 	
 	private static void wordleColor() {
 		Elemento[] elementos = {
-			new Color( EstadoElemento.TECLA, java.awt.Color.BLUE ),
-			new Color( EstadoElemento.TECLA, new java.awt.Color( 0, 150, 0 ) ),  // Verde un poco diferente para no confundirlo con el verde de wordle
-			new Color( EstadoElemento.TECLA, java.awt.Color.RED ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.CYAN ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.YELLOW ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.MAGENTA ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.WHITE ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.PINK ),
-			new Color( EstadoElemento.TECLA, java.awt.Color.LIGHT_GRAY ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.BLUE, '1' ),
+			new Color( EstadoElemento.TECLA, new java.awt.Color( 0, 150, 0 ), '2' ),  // Verde un poco diferente para no confundirlo con el verde de wordle
+			new Color( EstadoElemento.TECLA, java.awt.Color.RED, '3' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.CYAN, '4' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.YELLOW, '5' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.MAGENTA, '6' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.WHITE, '7' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.PINK, '8' ),
+			new Color( EstadoElemento.TECLA, java.awt.Color.LIGHT_GRAY, '9' ),
 		};
 		Opciones opciones = new Opciones( elementos );
 		Objetodle o = new Objetodle( opciones );

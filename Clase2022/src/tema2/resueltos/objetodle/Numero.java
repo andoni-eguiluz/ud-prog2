@@ -35,6 +35,11 @@ public class Numero extends Elemento {
 	}
 
 	@Override
+	public char aCaracter() {
+		return (char) ('0' + numero);
+	}
+	
+	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Numero) {
 			Numero l = (Numero) obj;
