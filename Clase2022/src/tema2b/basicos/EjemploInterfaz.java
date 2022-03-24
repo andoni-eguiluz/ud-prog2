@@ -8,6 +8,7 @@ public class EjemploInterfaz {
 		CA a = new CA();
 		CB b = new CB();
 		CC c = new CC();
+		CE e = new CE();
 		a.mA();
 		b.mB();
 		a.m1();
@@ -19,6 +20,7 @@ public class EjemploInterfaz {
 		listaM.add( a );
 		// listaM.add( b );  // No se puede
 		listaM.add( c );
+		listaM.add( e );
 		for (Im1 m1 : listaM) {
 			m1.m1();
 			if (m1 instanceof Movible2D) {
@@ -30,12 +32,18 @@ public class EjemploInterfaz {
 		listaO.add( a );
 		listaO.add( b );
 		listaO.add( c );
-		CE e = new CE();
 		listaO.add( e );
+		// Hacer m1() con todos los que puedan
 		for (Object objeto : listaO) {
-			System.out.println( objeto.toString() );
+//			if (objeto instanceof CA) {
+//				((CA)objeto).m1();
+//			} else if (objeto instanceof CC) {
+//				((CC)objeto).m1();
+//			} else if (objeto instanceof CE) {
+//				((CE)objeto).m1();
+//			}
 			if (objeto instanceof Im1) {
-				System.out.println( " -> " + objeto.toString() );
+				((Im1)objeto).m1();
 			}
 		}
 	}
@@ -71,13 +79,14 @@ class CB {
 }
 
 class CC implements Im1 {
-	public void m1() { System.out.println( "m1c" ); }
+	public void m1() { System.out.println( "m1" ); }
 }
 
-class CD {
+abstract class CD implements Im1 {
 	protected int d;
+	public abstract void m1();
 }
 
 class CE extends CD {
-	
+	public void m1() { System.out.println( "m1" ); }
 }

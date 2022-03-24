@@ -8,7 +8,7 @@ public class Persona implements Comparable<Persona> {
 		Persona p1 = new Persona( "Andoni" );
 		listaP.add( p1 );
 		listaP.add( new Persona( "Idoia" ) );
-		listaP.add( new Persona( "Elimio" ) );
+		listaP.add( new Persona( "Emilio" ) );
 		listaP.add( new Persona( "Iratxe" ) );
 		System.out.println( listaP );
 		if (listaP.contains( new Persona("Andoni") )) {
@@ -25,7 +25,6 @@ public class Persona implements Comparable<Persona> {
 	public int compareTo(Persona o) {
 		return nombre.compareTo( o.nombre );
 	}
-	
 	
 	@Override
 	public boolean equals(Object obj) {
