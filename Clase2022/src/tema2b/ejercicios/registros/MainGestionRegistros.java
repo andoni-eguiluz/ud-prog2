@@ -6,7 +6,7 @@ public class MainGestionRegistros {
 		GrupoRegistros grupo = new GrupoRegistros( "datos-registro.txt" );
 		System.out.println( "TODOS LOS REGISTROS:" );
 		for (Registro reg : grupo.getListaRegistros()) {
-			System.out.println( "  " + reg );
+			System.out.println( "  " + reg.toString() );
 		}
 		// TODO Listar solo los registros de usuario
 		// TODO Listar solo los precios
