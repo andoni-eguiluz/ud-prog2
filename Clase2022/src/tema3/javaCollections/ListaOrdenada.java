@@ -1,18 +1,21 @@
 package tema3.javaCollections;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Random;
 
 // Ejemplo de creación de clase genérica
 // Java no incorpora la lista ordenada como una clase dentro de Java Collections porque "violaría" el concepto de lista
 // (interfaz List) en el que se puede meter un elemento en *cualquier* posición
 // Pero podemos implementar una lista ordenada, siempre que aceptemos que no cumple el interfaz List
+// https://stackoverflow.com/questions/8725387/why-is-there-no-sortedlist-in-java
 
 /** Clase lista ordenada
  * @author andoni.eguiluz at ingenieria.deusto.es
  * @param <E>	Tipo base de la lista ordenada, debe implementar el interfaz Comparable<E>
  */
-public class ListaOrdenada<E extends Comparable<E>> {
+public class ListaOrdenada<E extends Comparable<E>> 
+	implements Iterable<E> {  // Implementamos el interfaz Iterable para permitir for each (ver ejemplo de main)
 	
 	/** Programa de prueba de la clase
 	 * @param args	No utilizado
@@ -42,6 +45,11 @@ public class ListaOrdenada<E extends Comparable<E>> {
 		
 		// No funciona con un no comparable
 		// ListaOrdenada<java.awt.Point> listaError = new ListaOrdenada<>(); 
+		
+		// Es iterable
+		for (String s : listaO2) {
+			System.out.print( "  " + s );
+		}
 	}
 
 
@@ -112,4 +120,11 @@ public class ListaOrdenada<E extends Comparable<E>> {
     	}
     	return true;
     }
+    
+    // Interfaz iterable
+
+	@Override
+	public Iterator<E> iterator() {
+		return lista.iterator();  // Aprovechamos que el ArrayList ya tiene iterator
+	}
 }
