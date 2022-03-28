@@ -7,12 +7,12 @@ import java.util.ArrayList;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
-public class GrupoObjetosAnimacion {
+public class GrupoObjetosMoviles {
 	private ArrayList<ObjetoMovil> lOAs;
 	
 	/** Crea un nuevo grupo de objetos de animación
 	 */
-	public GrupoObjetosAnimacion() {
+	public GrupoObjetosMoviles() {
 		lOAs = new ArrayList<>();
 	}
 	
@@ -145,7 +145,7 @@ public class GrupoObjetosAnimacion {
 	 * @param milis	Milisegundos del último movimiento
 	 * @param gObjetos	Grupo de otros objetos a comprobar
 	 */
-	public void choqueConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosAnimacion gObjetos ) {
+	public void choqueConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosMoviles gObjetos ) {
 		for (int i=0; i<lOAs.size(); i++) {
 			ObjetoMovil objetoA = lOAs.get(i);
 			for (int j=0; j<gObjetos.size(); j++) {
@@ -162,7 +162,7 @@ public class GrupoObjetosAnimacion {
 	 * @param milis	Milisegundos del último movimiento
 	 * @param gObjetos	Grupo de otros objetos a comprobar
 	 */
-	public void choqueMultipleConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosAnimacion gObjetos ) {
+	public void choqueMultipleConOtrosObjetos( VentanaGrafica v, int milis, GrupoObjetosMoviles gObjetos ) {
 		for (int i=0; i<lOAs.size(); i++) {
 			ObjetoMovil objetoA = lOAs.get(i);
 			if (!(objetoA instanceof Chocable) || (!((Chocable)objetoA).esChocable() && !((Chocable)objetoA).esTocable())) {

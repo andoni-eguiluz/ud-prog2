@@ -25,8 +25,8 @@ public class BrickBreaker {
 	
 	// Atributos base
 	private VentanaGrafica v;
-	private GrupoObjetosAnimacion bolas = new GrupoObjetosAnimacion();
-	private GrupoObjetosAnimacion elementosJuego = new GrupoObjetosAnimacion();
+	private GrupoObjetosMoviles bolas = new GrupoObjetosMoviles();
+	private GrupoObjetosMoviles elementosJuego = new GrupoObjetosMoviles();
 	private Bloque pala;
 	// Lógica general
 	private boolean bolasChocan = true;
