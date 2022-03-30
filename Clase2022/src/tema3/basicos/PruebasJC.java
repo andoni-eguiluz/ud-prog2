@@ -1,10 +1,6 @@
 package tema3.basicos;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.TreeSet;
-import java.util.Vector;
+import java.util.*;
 
 public class PruebasJC {
 	public static void main(String[] args) {
@@ -44,11 +40,17 @@ public class PruebasJC {
 		listaStrings.add( "a" );
 		System.out.println( listaStrings.contains( "a" ) );
 		System.out.println( listaStrings.indexOf( "a" ) );
+		listaStrings.set( 3, "b" );
 		System.out.println( listaStrings );
+		// CRUD - Create Read (seaRch) Update Delete
 		// Borrar
 		//while (!listaStrings.isEmpty()) {  // listaStrings.isEmpty() == false
 		//	listaStrings.remove(0);
 		//}
+		// Tb se puede recorrer
+		for (String elemento : listaStrings) {  // ITERABLE - interface Iterable
+			System.out.print( elemento );
+		}
 		listaStrings.clear();
 		// conversor de arraylist a array
 		// listaStrings.toArray()
@@ -58,13 +60,38 @@ public class PruebasJC {
 		String[] as = new String[10];  // Lineal, ord. por índice. ESPACIO MAXIMO definido en construcción + NO INSERCION NI BORRADO
 		as[9] = "hola";
 		
+		String[] pelis = { "CODA", "Belfast", "CODA", "Dune", "No mires arriba", "CODA", "Dune", "Drive my car", "licorice pizza" };
 		
 		/// LINEALES SIN POSICION SIN REPETICIÓN
-		HashSet<String> conjH = new HashSet<>();
-		TreeSet<String> conjT = new TreeSet<>();
+		HashSet<String> conjH = new HashSet<>();  // equals() - hashCode()  -- reimplementarlo si procede
+		TreeSet<String> conjT = new TreeSet<>();  // Tipo base debe implementar Comparable<E>
+		for (String peli : pelis) {
+			conjH.add( peli );
+			conjT.add( peli );
+		}
+		System.out.println();
+		System.out.println( conjH );
+		System.out.println( conjT );
+		System.out.println( conjH.contains( "CODA" ) );
+		System.out.println( conjT.contains( "El método Williams" ) );
+		conjH.remove( "CODA" );
+		System.out.println( conjH.contains( "CODA" ) );
 		
-		
-		
+		// MAPAS
+		HashMap<String,Integer> mapaVotosH = new HashMap<String,Integer>();
+		TreeMap<String,Integer> mapaVotosT = new TreeMap<>();
+		for (String voto : pelis) {
+			if (mapaVotosH.containsKey( voto )) {
+				// La peli estaba ya en el mapa - o sea, ya se la había votado anteriormente
+				// Hay que sumar 1 a los votos que ya tuviera
+				int votosAnteriores = mapaVotosH.get( voto );
+				mapaVotosH.put( voto, votosAnteriores + 1 );
+			} else {
+				// La peli no estaba ya en el mapa - hay que añadirla con 1 voto
+				mapaVotosH.put( voto, 1 ); // mapaVotosH.put( voto, Integer.valueOf(1) );
+			}
+		}
+		System.out.println(mapaVotosH);
 	}
 }
 
