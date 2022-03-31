@@ -88,7 +88,7 @@ public class PruebasJC {
 				mapaVotosH.put( voto, votosAnteriores + 1 );
 			} else {
 				// La peli no estaba ya en el mapa - hay que añadirla con 1 voto
-				mapaVotosH.put( voto, 1 ); // mapaVotosH.put( voto, Integer.valueOf(1) );
+				mapaVotosH.put( voto, 1 ); // boxing: es igual que mapaVotosH.put( voto, Integer.valueOf(1) );
 			}
 		}
 		System.out.println(mapaVotosH);
