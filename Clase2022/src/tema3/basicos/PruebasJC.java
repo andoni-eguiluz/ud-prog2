@@ -60,7 +60,7 @@ public class PruebasJC {
 		String[] as = new String[10];  // Lineal, ord. por índice. ESPACIO MAXIMO definido en construcción + NO INSERCION NI BORRADO
 		as[9] = "hola";
 		
-		String[] pelis = { "CODA", "Belfast", "CODA", "Dune", "No mires arriba", "CODA", "Dune", "Drive my car", "licorice pizza" };
+		String[] pelis = { "CODA", "Belfast", "CODA", "Dune", "No mires arriba", "CODA", "Dune", "Drive my car", "licorice pizza", "El método Williams" };
 		
 		/// LINEALES SIN POSICION SIN REPETICIÓN
 		HashSet<String> conjH = new HashSet<>();  // equals() - hashCode()  -- reimplementarlo si procede
@@ -84,14 +84,76 @@ public class PruebasJC {
 			if (mapaVotosH.containsKey( voto )) {
 				// La peli estaba ya en el mapa - o sea, ya se la había votado anteriormente
 				// Hay que sumar 1 a los votos que ya tuviera
-				int votosAnteriores = mapaVotosH.get( voto );
+				Integer votosAnteriores = mapaVotosH.get( voto );
+				// votosAnteriores.no hay nada que lo pueda cambiar con + 1
 				mapaVotosH.put( voto, votosAnteriores + 1 );
+				mapaVotosT.put( voto, votosAnteriores + 1 );
 			} else {
 				// La peli no estaba ya en el mapa - hay que añadirla con 1 voto
 				mapaVotosH.put( voto, 1 ); // boxing: es igual que mapaVotosH.put( voto, Integer.valueOf(1) );
+				mapaVotosT.put( voto, 1 );
 			}
 		}
 		System.out.println(mapaVotosH);
+		System.out.println(mapaVotosT);
+		// Se podría hacer sin sustituir unos valores con otros?
+		HashMap<String,Contador> mapaVotosCont = new HashMap<String,Contador>();
+		for (String voto : pelis) {
+			if (mapaVotosCont.containsKey(voto)) {  // Segunda vez o posterior
+				// mapaVotosCont.get( voto ).inc();
+				Contador cont = mapaVotosCont.get( voto );
+				cont.inc();
+			} else { // Primera vez
+				mapaVotosCont.put( voto, new Contador(1) );
+			}
+		}
+		System.out.println( mapaVotosCont );
+		// Cómo sacamos la ganadora?
+		int mayor = 0;
+		String peliGanadora = "";
+		for (String clave : mapaVotosCont.keySet()) {
+			Contador votosF = mapaVotosCont.get( clave );
+			if (votosF.get() > mayor) {
+				mayor = votosF.get();
+				peliGanadora = clave;
+			}
+		}
+		System.out.println( "Ganadora: " + peliGanadora + " con " + mayor + " votos." );
+		// Se pueden guardar los jurados que votan a cada peli?
+		HashMap<String,ArrayList<Integer>> mapaVotosJurado = new HashMap<>();
+		System.out.println( mapaVotosJurado );
+		for (int posiJurado=0; posiJurado<pelis.length; posiJurado++) {
+			String peli = pelis[posiJurado];
+			if (mapaVotosJurado.containsKey( peli )) {
+				mapaVotosJurado.get( peli ).add( posiJurado );
+			} else {
+				ArrayList<Integer> listaVotos = new ArrayList<>();
+				listaVotos.add( posiJurado );
+				mapaVotosJurado.put( peli, listaVotos );
+			}
+		}
+		System.out.println( mapaVotosJurado );
+		for (String peli : mapaVotosJurado.keySet()) {
+			ArrayList<Integer> votos = mapaVotosJurado.get( peli );
+			System.out.println( " * \t" + peli + "\t" + votos );
+		}
+	}
+}
+
+class Contador {
+	private int valor;
+	public Contador( int valorInicial ) {
+		valor = valorInicial;
+	}
+	public void inc() {
+		valor++;
+	}
+	public int get() {
+		return valor;
+	}
+	@Override
+	public String toString() {
+		return ""+valor;
 	}
 }
 
