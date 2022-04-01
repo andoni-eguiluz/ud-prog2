@@ -58,7 +58,7 @@ public class Combi {
 		ArrayList<Elemento> copiaSol = new ArrayList<>( solucion.lista );
 		// Paso 1 - buscar en las mismas posiciones
 		int contIguales = 0;
-		for (int i=copiaSol.size(); i>=0; i--) {
+		for (int i=copiaSol.size()-1; i>=0; i--) {
 			if (i<lista.size() && lista.get(i).equals(copiaSol.get(i))) {  // Son iguales
 				contIguales++;
 				copiaSol.remove(i);
