@@ -49,6 +49,7 @@ public class EjemploExcepcionesUrl {
 		ArrayList<String> ret = new ArrayList<>();
 		BufferedReader input = null;
 		InputStream inStream = null;
+		System.setProperty("http.agent", "Chrome");  // Para que la consulta a web no sea identificada como un bot por el servidor
 		URLConnection connection = (new URL(url)).openConnection();
 		connection.setDoInput(true);
 		inStream = connection.getInputStream();
@@ -107,8 +108,15 @@ public class EjemploExcepcionesUrl {
 	}
 	
 	private static void visualizaEquipo( String equipo ) {
-		int grados = getGradosDeCiudad( equipo );
+		String ciudad = dejaMinusculas(equipo); // Quitamos las mayúsculas y ponemos en minúsculas
+		int grados = getGradosDeCiudad( ciudad );
 		System.out.println( "Equipo " + equipo + " - temperatura " + grados + "º" );
+	}
+	
+	// Quita tildes y deja solo minúsculas
+	private static String dejaMinusculas( String texto ) {
+		texto = texto.toLowerCase();
+		return texto.replaceAll( "á", "a" ).replaceAll( "é", "e" ).replaceAll( "í", "i" ).replaceAll( "ó", "o" ).replaceAll( "ú", "u" );
 	}
 	
 	private static int getGradosDeCiudad( String ciudad ) {
@@ -117,13 +125,23 @@ public class EjemploExcepcionesUrl {
 		// Y suele haber una línea que indica los grados:
 		//    <span data-temp="9" ... 
 		// Y el charset es UTF-8
-		ArrayList<String> lineasGrados = buscaEnWeb( "https://www.eltiempo.es/" + ciudad + ".html", "data-temp", "UTF-8" );
+		// En la web eltiempo.es era esto...
+		// ArrayList<String> lineasGrados = buscaEnWeb( "https://www.eltiempo.es/" + ciudad + ".html", "data-temp", "UTF-8" );
+		// Ahora (marzo 2022) miramos en otra web, www.tiempo.com:
+		// y hemos visto que la temperatura está después de una marca "dato-temperatura changeUnitT"
+		ArrayList<String> lineasGrados = buscaEnWeb( "https://www.tiempo.com/" + ciudad + ".htm", "dato-temperatura changeUnitT", "UTF-8" );
 		// La primera es la que vale
 		String linea = lineasGrados.get(0);
-		// Buscamos las dobles comillas y lo que hay en medio son los grados
-		int primeraComilla = linea.indexOf( "span data-temp=\"" );
-		int segundaComilla = linea.indexOf( '"', primeraComilla+16 );
-		int temperatura = Integer.parseInt( linea.substring( primeraComilla+16, segundaComilla ) );
+		// Buscamos en el formato que encontramos en la web el sitio de los grados
+		// Antes con eltiempo.es era:
+		// int primeraComilla = linea.indexOf( "span data-temp=\"" );
+		// int segundaComilla = linea.indexOf( '"', primeraComilla+16 );
+		// int temperatura = Integer.parseInt( linea.substring( primeraComilla+16, segundaComilla ) );
+		// En www.tiempo.com (marzo 2022) es algo así como  <span class="dato-temperatura changeUnitT" data="7.25|0|">
+		int marca = linea.indexOf( "dato-temperatura changeUnitT" );
+		int posData = linea.indexOf( "data=", marca );
+		int posFinal = linea.indexOf( "|", posData );
+		int temperatura = (int) Math.round( Double.parseDouble( linea.substring( posData + 6, posFinal) ) );
 		return temperatura;
 	}
 	
