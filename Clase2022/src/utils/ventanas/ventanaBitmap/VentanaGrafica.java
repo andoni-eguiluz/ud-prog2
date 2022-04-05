@@ -848,6 +848,31 @@ public class VentanaGrafica {
 		dibujaPoligono( grosor, colorFondo, cerrado, punto );
 	}
 
+	/** Dibuja un polígono regular en la ventana
+	 * @param x	Coordenada x de centro del polígono
+	 * @param y	Coordenada y de centro del polígono
+	 * @param lados	Número de lados (debe ser mayor o igual que 3, de no serlo no se dibuja nada)
+	 * @param radio	Longitud del radio del círculo en el que se inscribe el polígono
+	 * @param giro	Giro en radianes en sentido horario del punto inicial del polígono (0 lo inicia en la vertical hacia arriba)
+	 * @param grosor	Grueso de la línea de dibujo del polígono (en píxels)
+	 * @param color  	Color de la línea de dibujo del polígono
+	 */
+	public void dibujaPoligonoRegular( double x, double y, int lados, double radio, double giro, float grosor, Color color ) {
+		if (lados<=2) return; // Empezamos con triángulos
+		Point2D[] arrayVertices = new Point2D[lados];  // Array de puntos de vértice del polígono
+		// Calculamos los vértices:
+		double giroVertice = giro;
+		int numVertice = 0;
+		while (numVertice < lados) {
+			double pY = -Math.cos(giroVertice) * radio;
+			double pX = Math.sin(giroVertice) * radio;
+			arrayVertices[numVertice] = new Point2D.Double( pX+x, pY+y );
+			giroVertice += (Math.PI*2/lados);
+			numVertice++;
+		}
+		dibujaPoligono( grosor, color, true, arrayVertices );
+	}
+	
 	/** Dibuja un texto en la ventana
 	 * @param x	Coordenada x de la esquina superior izquierda del rectángulo
 	 * @param y	Coordenada y de la esquina superior izquierda del rectángulo
