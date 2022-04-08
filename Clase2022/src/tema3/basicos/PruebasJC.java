@@ -137,8 +137,58 @@ public class PruebasJC {
 			ArrayList<Integer> votos = mapaVotosJurado.get( peli );
 			System.out.println( " * \t" + peli + "\t" + votos );
 		}
+		
+		// Podría hacer un mapa o un set en lugar de con strings película con objetos de clase Película?
+		TreeSet<Pelicula> setPeliculas = new TreeSet<Pelicula>();
+		for (String nombrePelicula : pelis) {
+			setPeliculas.add( new Pelicula( nombrePelicula ) );
+		}
+		System.out.println( setPeliculas );
+		HashSet<Pelicula> setPeliculasH = new HashSet<Pelicula>();
+		for (String nombrePelicula : pelis) {
+			Pelicula p = new Pelicula( nombrePelicula );
+			setPeliculasH.add( p );
+			System.out.println( " Peli " + nombrePelicula + " hashcode " + p.hashCode() );
+		}
+		Pelicula pp1 = new Pelicula( "CODA" );
+		Pelicula pp2 = new Pelicula( "CODA" );
+		System.out.println( pp1.equals( pp2 ) );
+		System.out.println( setPeliculasH );
 	}
 }
+
+class Pelicula implements Comparable<Pelicula> {
+	String nombre;
+	public Pelicula( String nombre ) {
+		this.nombre = nombre;
+	}
+	
+	@Override
+	public int hashCode() {
+		return nombre.hashCode();
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Pelicula) {
+			Pelicula p2 = (Pelicula) obj;
+			return this.nombre.equals( p2.nombre );
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	@Override
+	public int compareTo(Pelicula o) {
+		String nombreMay = nombre.toUpperCase().replaceAll("Á","A").replaceAll("Ñ","NZ");
+		String nombre2May = o.nombre.toUpperCase().replaceAll("Á","A").replaceAll("Ñ","NZ");
+		return -nombreMay.compareTo( nombre2May );
+	}
+}
+
+
 
 class Contador {
 	private int valor;
