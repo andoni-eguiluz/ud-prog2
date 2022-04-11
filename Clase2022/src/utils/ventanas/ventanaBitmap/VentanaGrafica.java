@@ -39,7 +39,7 @@ public class VentanaGrafica {
 		v.setDibujadoInmediato( false );
 		Object opcion = JOptionPane.showInputDialog( v.getJFrame(), "¿Qué quieres probar?",
 				"Selección de test", JOptionPane.QUESTION_MESSAGE, null, 
-				new String[] { "Movimiento", "Giros", "Tiro", "Texto", "Zoom" }, "Movimiento" );
+				new String[] { "Movimiento", "Giros", "Tiro", "Texto", "Zoom", "Desplazamiento" }, "Movimiento" );
 		if ( "Movimiento".equals( opcion ) ) {
 			movimiento();
 		} else if ( "Giros".equals( opcion ) ) {
@@ -50,6 +50,8 @@ public class VentanaGrafica {
 			texto();
 		} else if ( "Zoom".equals( opcion ) ) {
 			zoom();
+		} else if ( "Desplazamiento".equals( opcion ) ) {
+			desplazamiento();
 		}
 	}
 
@@ -251,6 +253,40 @@ public class VentanaGrafica {
 			v.repaint();
 		}
 
+	
+	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla
+	private static void desplazamiento() {
+		v.setDibujadoInmediato( false );
+		// Hay un círculo que se dibuja siguiendo al centro de pantalla (empieza 400,300) y otro fijo en (100,100) 
+		// El círculo se mueve con cursores
+		int xPersonaje = 400;
+		int yPersonaje = 300;
+		while (!v.estaCerrada()) {
+			if (v.isTeclaPulsada(KeyEvent.VK_UP)) {
+				yPersonaje -= 5;
+			}
+			if (v.isTeclaPulsada(KeyEvent.VK_DOWN)) {
+				yPersonaje += 5;
+			}
+			if (v.isTeclaPulsada(KeyEvent.VK_LEFT)) {
+				xPersonaje -= 5;
+			}
+			if (v.isTeclaPulsada(KeyEvent.VK_RIGHT)) {
+				xPersonaje += 5;
+			}
+			v.setOffsetDibujo( new Point( xPersonaje - v.getAnchura()/2, yPersonaje - v.getAltura()/2 ) );
+			v.borra();
+			v.dibujaCirculo( 0, 0, 80, 5f, Color.PINK, Color.MAGENTA );  // Elemento fijo
+			v.dibujaImagen( "img/UD-blue-girable.png", 500, 200, 1.0, 0.0, 1.0f );  // Elemento fijo
+			v.dibujaCirculo( xPersonaje, yPersonaje, 50, 3f, Color.BLUE, Color.CYAN );  // Elemento móvil
+			v.repaint();
+			v.espera(10);
+		}
+		v.acaba();
+	}		
+		
+		
+		
 		
 	// Parte estática de datos comunes 
 	// Métodos estáticos
@@ -279,6 +315,7 @@ public class VentanaGrafica {
 				return false;   // false = enviar el evento al comp
 			} } );
 	}
+	
 	static {  // Inicializar en la carta de la clase
 		init();
 	}
@@ -596,11 +633,11 @@ public class VentanaGrafica {
 
 		// Convierte x de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
 		private double calcX( double x ) {
-			return offsetInicio.x + x * escalaDibujo;
+			return x * escalaDibujo - offsetInicio.x;
 		}
 		// Convierte y de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
 		private double calcY( double y ) {
-			return offsetInicio.y + (ejeYInvertido?1.0:-1.0) * y * escalaDibujo;
+			return (ejeYInvertido?1.0:-1.0) * y * escalaDibujo - offsetInicio.y;
 		}
 
 	/** Dibuja un rectángulo relleno en la ventana
