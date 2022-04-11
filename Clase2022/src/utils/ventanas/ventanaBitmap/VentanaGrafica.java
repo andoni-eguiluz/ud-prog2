@@ -254,13 +254,15 @@ public class VentanaGrafica {
 		}
 
 	
-	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla
+	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla (con zoom)
 	private static void desplazamiento() {
 		v.setDibujadoInmediato( false );
 		// Hay un elemento que se dibuja siguiendo al centro de pantalla (empieza 400,300) y otros fijos 
 		// El personaje del centro se mueve con cursores y la pantalla se mueve con él
 		int xPersonaje = 400;
 		int yPersonaje = 300;
+		double zoom = 1.0;
+		v.setMensaje( "Mueve con cursores. Zoom con +/-" );
 		while (!v.estaCerrada()) {
 			// Movimiento de personaje
 			if (v.isTeclaPulsada(KeyEvent.VK_UP)) {
@@ -275,6 +277,15 @@ public class VentanaGrafica {
 			if (v.isTeclaPulsada(KeyEvent.VK_RIGHT)) {
 				xPersonaje += 5;
 			}
+			// Cambio de zoom
+			if (v.isTeclaPulsada(KeyEvent.VK_PLUS)) {
+				zoom = zoom *1.01;
+				v.setEscalaDibujo(zoom);
+			} 
+			if (v.isTeclaPulsada(KeyEvent.VK_MINUS)) {
+				zoom = zoom / 1.01;
+				v.setEscalaDibujo(zoom);
+			} 
 			v.setOffsetDibujo( new Point( xPersonaje - v.getAnchura()/2, yPersonaje - v.getAltura()/2 ) );
 			v.borra();
 			v.dibujaCirculo( 0, 0, 80, 5f, Color.PINK, Color.MAGENTA );  // Elemento fijo
