@@ -254,7 +254,7 @@ public class VentanaGrafica {
 		}
 
 	
-	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla (con zoom)
+	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla
 	private static void desplazamiento() {
 		v.setDibujadoInmediato( false );
 		// Hay un elemento que se dibuja siguiendo al centro de pantalla (empieza 400,300) y otros fijos 
@@ -286,7 +286,7 @@ public class VentanaGrafica {
 				zoom = zoom / 1.01;
 				v.setEscalaDibujo(zoom);
 			} 
-			v.setOffsetDibujo( new Point( xPersonaje - v.getAnchura()/2, yPersonaje - v.getAltura()/2 ) );
+			v.setOffsetDibujo( new Point( (int) (xPersonaje - v.getAnchuraConEscala()/2), (int) (yPersonaje - v.getAlturaConEscala()/2) ) );
 			v.borra();
 			v.dibujaCirculo( 0, 0, 80, 5f, Color.PINK, Color.MAGENTA );  // Elemento fijo
 			v.dibujaImagen( "img/UD-blue-girable.png", 500, 200, 1.0, 0.0, 1.0f );  // Elemento fijo
@@ -601,11 +601,25 @@ public class VentanaGrafica {
 		return panel.getHeight()-1;
 	}
 	
+	/** Devuelve la altura del panel de dibujo de la ventana
+	 * @return	Altura del panel principal (última coordenada y) en unidades de dibujo (aplicando la escala, si la tiene)
+	 */
+	public double getAlturaConEscala() {
+		return panel.getHeight()/escalaDibujo;
+	}
+	
 	/** Devuelve la anchura del panel de dibujo de la ventana
 	 * @return	Anchura del panel principal (última coordenada x) en píxels
 	 */
 	public int getAnchura() {
 		return panel.getWidth()-1;
+	}
+	
+	/** Devuelve la anchura del panel de dibujo de la ventana
+	 * @return	Anchura del panel principal (última coordenada x) en unidades de dibujo (aplicando la escala, si la tiene)
+	 */
+	public double getAnchuraConEscala() {
+		return panel.getWidth()/escalaDibujo;
 	}
 	
 	/** Borra toda la ventana (pinta de color blanco)
@@ -645,11 +659,11 @@ public class VentanaGrafica {
 
 		// Convierte x de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
 		private double calcX( double x ) {
-			return x * escalaDibujo - offsetInicio.x;
+			return x * escalaDibujo - offsetInicio.x * escalaDibujo;
 		}
 		// Convierte y de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
 		private double calcY( double y ) {
-			return (ejeYInvertido?1.0:-1.0) * y * escalaDibujo - offsetInicio.y;
+			return (ejeYInvertido?1.0:-1.0) * y * escalaDibujo - offsetInicio.y * escalaDibujo;
 		}
 
 	/** Dibuja un rectángulo relleno en la ventana
