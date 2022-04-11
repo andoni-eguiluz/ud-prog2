@@ -257,11 +257,12 @@ public class VentanaGrafica {
 	// Prueba 6: Desplazamiento de pantalla en mundo virtual mayor que lo que se ve en pantalla
 	private static void desplazamiento() {
 		v.setDibujadoInmediato( false );
-		// Hay un círculo que se dibuja siguiendo al centro de pantalla (empieza 400,300) y otro fijo en (100,100) 
-		// El círculo se mueve con cursores
+		// Hay un elemento que se dibuja siguiendo al centro de pantalla (empieza 400,300) y otros fijos 
+		// El personaje del centro se mueve con cursores y la pantalla se mueve con él
 		int xPersonaje = 400;
 		int yPersonaje = 300;
 		while (!v.estaCerrada()) {
+			// Movimiento de personaje
 			if (v.isTeclaPulsada(KeyEvent.VK_UP)) {
 				yPersonaje -= 5;
 			}
@@ -278,7 +279,7 @@ public class VentanaGrafica {
 			v.borra();
 			v.dibujaCirculo( 0, 0, 80, 5f, Color.PINK, Color.MAGENTA );  // Elemento fijo
 			v.dibujaImagen( "img/UD-blue-girable.png", 500, 200, 1.0, 0.0, 1.0f );  // Elemento fijo
-			v.dibujaCirculo( xPersonaje, yPersonaje, 50, 3f, Color.BLUE, Color.CYAN );  // Elemento móvil
+			v.dibujaImagen( "img/sonic.png", xPersonaje, yPersonaje, 1.0, 0.0, 1.0f );  // Elemento móvil
 			v.repaint();
 			v.espera(10);
 		}
