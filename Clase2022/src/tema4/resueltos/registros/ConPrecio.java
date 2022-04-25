@@ -1,4 +1,4 @@
-package tema4.ejemplos.registros;
+package tema4.resueltos.registros;
 
 public interface ConPrecio {
 	
