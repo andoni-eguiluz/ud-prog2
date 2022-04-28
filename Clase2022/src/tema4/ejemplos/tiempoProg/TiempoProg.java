@@ -1,8 +1,10 @@
 package tema4.ejemplos.tiempoProg;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class TiempoProg implements Comparable<TiempoProg> {
+public class TiempoProg implements Comparable<TiempoProg>, Serializable {
 	private Date fecha;
 	private int tiempo;
 	
@@ -37,6 +39,23 @@ public class TiempoProg implements Comparable<TiempoProg> {
 		return fecha + " : " + tiempo;
 	}
 	
+	SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy HH:mm" );
+	public String aLinea() {
+		return sdf.format(fecha) + "\t" + tiempo;
+	}
+	
+	public TiempoProg leerLinea( String linea ) {
+		TiempoProg ret = new TiempoProg( null, 0 );
+		String[] trozos = linea.split("\t");
+		try {
+			ret.fecha = sdf.parse( trozos[0] );
+			ret.tiempo = Integer.parseInt( trozos[1] );
+		} catch (Exception e) {
+			return null;
+		}
+		return ret;
+	}
+	
 	@Override
 	public int hashCode() {
 		return fecha.hashCode() + tiempo;
@@ -61,5 +80,8 @@ public class TiempoProg implements Comparable<TiempoProg> {
 		return comp;
 	}
 	
+	public String metodoNuevo() {
+		return "hola";
+	}
 	
 }
