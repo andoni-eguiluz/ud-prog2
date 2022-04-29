@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeSet;
 
+/** Pruebas de las clases TiempoProg y GestorTiemposProg
+ * @author andoni.eguiluz at ingenieria.deusto.es
+ */
 public class PruebasTP {
 	public static void main(String[] args) {
 		Date ahora = new Date();
@@ -35,11 +38,15 @@ public class PruebasTP {
 		try {
 			gestor.guardarFichero( true, "tiempos.dat" );
 			System.out.println( "Fichero guardado" );
-			gestor.addTiempo( null );
-			System.out.println( gestor.getTiempos() );
+			System.out.println( "Datos guardados: " + gestor.getListaTiempos() );
+			gestor.addTiempo( null ); // Cambiamos lo datos a ver si al cargar se restauran
+			System.out.println( "Datos cambiados: " + gestor.getListaTiempos() );
 			gestor.cargarFichero( true, "tiempos.dat" );
 			System.out.println( "Fichero cargado" );
-			System.out.println( gestor.getTiempos() );
+			System.out.println( "Datos restaurados: " + gestor.getListaTiempos() );
+			System.out.println( gestor.getListaTiempos() );
+			
+			gestor.guardarFichero( false, "tiempos.txt" );
 			gestor.guardarFichero( false, "tiempos.txt" );
 			// ...
 		} catch (IOException e) {
