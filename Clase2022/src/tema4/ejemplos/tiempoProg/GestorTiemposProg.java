@@ -10,6 +10,9 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/** Clase contenedora de tiempos de programación, con capacidad de guardado-carga de fichero
+ * @author andoni.eguiluz at ingenieria.deusto.es
+ */
 public class GestorTiemposProg {
 	
 	private ArrayList<TiempoProg> listaTiempos;

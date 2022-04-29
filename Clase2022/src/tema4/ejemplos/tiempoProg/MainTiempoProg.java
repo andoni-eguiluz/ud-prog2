@@ -66,7 +66,13 @@ public class MainTiempoProg {
 				FORMATO_DMYHM.format(new Date()) );
 		try {
 			Date fecha = FORMATO_DMYHM.parse( resp );
+			if (resp==null | resp.isEmpty()) {  // El usuario no quiere introducir fecha
+				return;
+			}
 			resp = JOptionPane.showInputDialog( "Introduce minutos programando:" );
+			if (resp==null | resp.isEmpty()) {  // El usuario no quiere introducir minutos
+				return;
+			}
 			int tiempo = Integer.parseInt( resp );
 			TiempoProg tp = new TiempoProg( fecha, tiempo );
 			gestor.addTiempo( tp );
