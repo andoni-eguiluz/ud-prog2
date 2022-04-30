@@ -1,12 +1,9 @@
 package utils.ventanas.componentes;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-
 import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.*;
 
@@ -304,7 +301,6 @@ public class PanelGrafico extends JPanel {
 	 * @param altura	Altura en píxels (valor positivo) de la zona de pintado
 	 * @param colorDeFondo  El color de fondo del panel
 	 */
-	@SuppressWarnings("serial")
 	public PanelGrafico(int anchura, int altura, Color colorDeFondo) {
 		this.colorFondo = colorDeFondo;
 		buffer = new BufferedImage( anchura, altura, BufferedImage.TYPE_INT_ARGB );
