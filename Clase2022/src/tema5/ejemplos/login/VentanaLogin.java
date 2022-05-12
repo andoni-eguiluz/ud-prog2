@@ -83,6 +83,10 @@ public class VentanaLogin extends JFrame {
 				System.out.println( "TYPED " + e );
 				if (e.getKeyChar()>='0' && e.getKeyChar()<='9') {
 					System.out.println( "Es un dígito" );
+					e.consume();
+				}
+				if (tfUsuario.getText().length()>=10) {
+					e.consume();
 				}
 			}
 			@Override
@@ -97,12 +101,82 @@ public class VentanaLogin extends JFrame {
 		});
 		tfUsuario.addFocusListener( new FocusListener() {
 			@Override
+			public void focusGained(FocusEvent e) {
+				System.out.println( "GAINED " + e );
+			}
+			@Override
 			public void focusLost(FocusEvent e) {
 				System.out.println( "LOST " + e );
+				if (tfUsuario.getText().length()==0) {
+					tfUsuario.requestFocus();
+				}
+				if (!tfUsuario.getText().equals("Andoni")) {  // Consulta a un mapa...
+					lMensajeInfo.setText( "Usuario erróneo: mete Andoni" );
+				}
+			}
+		});
+		KeyListener escEscape = new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+					dispose();
+				}
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+			}
+		};
+		tfUsuario.addKeyListener( escEscape );
+		tfPassword.addKeyListener( escEscape );
+		cbRecuerdame.addKeyListener( escEscape );
+		bAceptar.addKeyListener( escEscape );
+		bCancelar.addKeyListener( escEscape );
+		// Prueba mouselistener
+		lLogo.addMouseListener( new MouseListener() {
+			Point pulsacion;
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				System.out.println( "RELEASED " + e );
+				if (e.getPoint().distance( pulsacion ) < 10) {
+					// ...
+				}
+			}
+			@Override
+			public void mousePressed(MouseEvent e) {
+				System.out.println( "PRESS " + e );
+				pulsacion = e.getPoint();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				System.out.println( "EXIT " + e );
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				System.out.println( "ENTER " + e );
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println( "CLICK " + e );
+			}
+		});
+		tfPassword.addFocusListener( new FocusListener() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (tfUsuario.getText().length()>0 && tfPassword.getText().length()>0) {
+					bAceptar.setEnabled( true );
+				}
 			}
 			@Override
 			public void focusGained(FocusEvent e) {
-				System.out.println( "GAINED " + e );
+			}
+		});
+		bAceptar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// ¿Cómo lanzar otra ventana?
 			}
 		});
 	}
