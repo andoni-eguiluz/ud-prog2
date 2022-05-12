@@ -13,7 +13,7 @@ public class VentanaLogin extends JFrame {
 		// 2.- Configurar contenedor
 		this.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		this.setSize( 500, 300 );
-		this.setLocation( -1900, 100 );
+		this.setLocation( 2100, 100 );
 		this.setTitle( "Login" );
 		this.setLayout( new BorderLayout() );  // no hace falta
 		// 3.- Crear resto de contenedores
