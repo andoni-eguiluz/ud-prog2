@@ -177,6 +177,20 @@ public class VentanaLogin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// ¿Cómo lanzar otra ventana?
+				DatoUsuario[] datosPrueba = new DatoUsuario[] {
+						new DatoUsuario( "A", 20, 80 ),
+						new DatoUsuario( "B", 120, 110 ),
+						new DatoUsuario( "C", 180, 200 ),
+						new DatoUsuario( "D", 200, 150 ),
+						new DatoUsuario( "E", 230, 40 ),
+					};
+				VentanaUsuario v = new VentanaUsuario( VentanaLogin.this, datosPrueba );
+				v.setVisible( true );
+				// ¿Cómo quitar la que lanza?
+				// 1.- Ocultar
+				// VentanaLogin.this.setVisible( false );
+				// 2.- Liberar
+			 	/*VentanaLogin.this.*/dispose();
 			}
 		});
 	}
