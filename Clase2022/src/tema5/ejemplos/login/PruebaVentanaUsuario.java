@@ -6,8 +6,7 @@ public class PruebaVentanaUsuario {
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		f.setSize( 400, 300 );
-		f.setLocation( 2000, 100 );
-		f.setVisible( false );
+		f.setLocation( 200, 100 );
 		DatoUsuario[] datosPrueba = new DatoUsuario[] {
 			new DatoUsuario( "A", 20, 80 ),
 			new DatoUsuario( "B", 120, 110 ),
