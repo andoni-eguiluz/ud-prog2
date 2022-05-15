@@ -197,23 +197,23 @@ public class VentanaUsuario extends JFrame {
 			
 			// Posibilidad 2 de eventos de ratón
 			MouseAdapter ma = new MouseAdapter() {
-				Point posicionActual;
+				Point posicionInicial;
 				@Override
 				public void mousePressed(MouseEvent e) {
-					posicionActual = e.getPoint();
+					posicionInicial = e.getPoint();
 				}
 				@Override
 				public void mouseDragged(MouseEvent e) {
-					if (posicionActual!=null) {
-						int despX = e.getX()-posicionActual.x;
-						int despY = e.getY()-posicionActual.y;
+					if (posicionInicial!=null) {
+						int despX = e.getX()-posicionInicial.x;
+						int despY = e.getY()-posicionInicial.y;
 						l.setLocation( l.getX() + despX, l.getY() + despY );
 						l.setBackground( Color.CYAN );
 					}
 				}
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					posicionActual = null;
+					posicionInicial = null;
 					l.setBackground( Color.LIGHT_GRAY );
 					// TODO actualizar el dato en la lista / contenedor de datos
 				}
