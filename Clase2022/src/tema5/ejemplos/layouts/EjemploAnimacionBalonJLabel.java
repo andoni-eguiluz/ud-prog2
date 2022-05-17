@@ -38,7 +38,7 @@ public class EjemploAnimacionBalonJLabel extends JFrame {
 		// (posibilidad 1) Acceder como fichero
 		// lBalon = new JLabel( new ImageIcon( "src/img/balon.png" ));
 		// (posibilidad 2) Acceder como recurso
-		lBalon = new JLabel( new ImageIcon( getClass().getResource("/tema3/resueltos/pong/balon.png") ) );
+		lBalon = new JLabel( new ImageIcon( getClass().getResource("/tema2/resueltos/pong/balon.png") ) );
 		pFondo = new JPanel();
 		// Asignar layouts - el layout nulo permite mover libremente sus componentes
 		pFondo.setLayout( null );

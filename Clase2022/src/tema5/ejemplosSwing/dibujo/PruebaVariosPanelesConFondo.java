@@ -21,9 +21,9 @@ public class PruebaVariosPanelesConFondo {
 		JFrame prueba = new JFrame();
 		prueba.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		prueba.setSize( 600, 500 );
-		URL recursoImgURL = PruebaVariosPanelesConFondo.class.getResource( "/tema3/resueltos/pong/balon.png" );  // Path desde la clase
+		URL recursoImgURL = PruebaVariosPanelesConFondo.class.getResource( "/tema2/resueltos/pong/balon.png" );  // Path desde la clase
 		JPanel panelFondo1 = new JPanelFondo( recursoImgURL );
-		File ficheroImg = new File( "src/tema3/img/coche.png" );  // Path de fichero desde el proyecto
+		File ficheroImg = new File( "src/utils/ventanas/ventanaBitmap/img/sonic.png" );  // Path de fichero desde el proyecto
 		JPanel panelFondo2 = new JPanelFondo( ficheroImg );
 		panelFondo2.setOpaque( false );
 		Icon grafNormal = new ImageIcon( recursoImgURL );  // Imagen normal (no escalada)

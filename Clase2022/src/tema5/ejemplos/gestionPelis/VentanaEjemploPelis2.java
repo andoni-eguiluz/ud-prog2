@@ -126,7 +126,7 @@ public class VentanaEjemploPelis2 extends JFrame {
 				tfNombrePeli.setText( peliSel.getNombre() );
 				tfIngresosPeli.setText( peliSel.getIngresos() + "" );
 				taComentarios.setText( peliSel.getComentarios() );
-				lFoto.setIcon( new ImageIcon( "bin/tema789/ejemploPelis/" + peliSel.getPoster() ) );
+				lFoto.setIcon( new ImageIcon( "src/tema5/ejemplos/gestionPelis/" + peliSel.getPoster() ) );
 			}
 		} ); 
 		

@@ -24,7 +24,7 @@ public class EjemploAnimacionEstrellaJLabel extends JFrame {
 		setTitle( "Ejemplo animación de rebote" );
 		setSize( 1000, 800 );
 		setDefaultCloseOperation( JFrame.HIDE_ON_CLOSE );
-		lEstrella = new JLabelGrafico( "/tema3/ejemplos/runner/img/star.png", 200, 200 );
+		lEstrella = new JLabelGrafico( "/tema2b/ejemplos/runner/img/star.png", 200, 200 );
 		pEscenario = new JPanel();
 		pEscenario.setLayout(null);
 		lEstrella.setBounds( 0, 500, 300, 300 );
