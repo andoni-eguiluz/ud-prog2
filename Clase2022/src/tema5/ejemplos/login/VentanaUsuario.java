@@ -198,9 +198,11 @@ public class VentanaUsuario extends JFrame {
 			// Posibilidad 2 de eventos de ratón
 			MouseAdapter ma = new MouseAdapter() {
 				Point posicionInicial;
+				Point posicionInicialLabel;
 				@Override
 				public void mousePressed(MouseEvent e) {
 					posicionInicial = e.getPoint();
+					posicionInicialLabel = l.getLocation();
 				}
 				@Override
 				public void mouseDragged(MouseEvent e) {
@@ -216,10 +218,36 @@ public class VentanaUsuario extends JFrame {
 					posicionInicial = null;
 					l.setBackground( Color.LIGHT_GRAY );
 					// TODO actualizar el dato en la lista / contenedor de datos
+					// Cancelar drag si está fuera del pCentral
+					if (l.getX()>pCentral.getWidth() || l.getX()<0 || l.getY()<0 || l.getY()>pCentral.getHeight()) {
+						retornarLabel( l );
+					}
+				}
+				private void retornarLabel( JLabel l ) {
+					Thread hilo = new Thread() {
+						public void run() {
+							double posX = l.getX();
+							double posY = l.getY();
+							double incX = (posicionInicialLabel.x - posX) / 100;
+							double incY = (posicionInicialLabel.y - posY) / 100;
+							for (int i=0; i<100; i++) {
+								posX += incX;
+								posY += incY;
+								l.setLocation( (int) posX, (int) posY );
+								try {
+									Thread.sleep( 100 );
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					};
+					hilo.start();
 				}
 			};
 			l.addMouseListener(ma);
 			l.addMouseMotionListener(ma);
 		}
 	}
+	
 }
