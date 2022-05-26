@@ -1,6 +1,8 @@
 package utils.ventanas.componentes;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URL;
@@ -19,10 +21,10 @@ public class JLabelGrafico extends JLabel {
 		JFrame f = new JFrame( "Prueba JLabelGrafico" );
 		f.setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
 		// f.setLocation( 2000, 100 );   // Si se quiere cambiar la posición
-		f.getContentPane().setLayout( null );
-		JLabel label = new JLabel( new ImageIcon( "src/tema3/img/coche.png" ) );
+		f.getContentPane().setLayout( null );  // Layout nulo para colocar en cualquier lugar los componentes
+		JLabel label = new JLabel( new ImageIcon( "src/utils/ventanas/ventanaBitmap/img/coche.png" ) );
 		label.setBounds( 0, 0, 150, 150 );
-		JLabelGrafico labelGrafico = new JLabelGrafico( "/tema3/img/coche.png", 100, 100 );
+		JLabelGrafico labelGrafico = new JLabelGrafico( "/utils/ventanas/ventanaBitmap/img/coche.png", 100, 100, 0.0, 1.0f, true, true );
 		labelGrafico.setLocation( 400, 100 );
 			// TODO probar este 300, 300 con diferentes tamaños. Si x<=0 ajusta el ancho y si es y<=0 ajusta el alto
 		f.setSize( 600, 400 );
@@ -65,6 +67,9 @@ public class JLabelGrafico extends JLabel {
 	protected float opacidad;      // Opacidad del objeto (0.0f a 0.1f)
 	protected double zoom = 1.0;   // 1.0 = 100% zoom  (0.1 = 10%, 10.0 = 1000% ...)
 	protected BufferedImage imagenObjeto;  // imagen para el escalado
+	protected boolean flipH;       // Flip horizontal
+	protected boolean flipV;       // Flip vertical
+	
 	private static final long serialVersionUID = 1L;  // para serializar
 
 	/** Crea un nuevo JLabel gráfico.<br>
@@ -86,12 +91,29 @@ public class JLabelGrafico extends JLabel {
 	 * @param opacidad	Opacidad del objeto (0.0f transparente a 1.0f opaco)
 	 */
 	public JLabelGrafico( String nombreImagenObjeto, int anchura, int altura, double rotacion, float opacidad ) {
+		this( nombreImagenObjeto, anchura, altura, rotacion, opacidad, false, false );
+	}
+	
+	/** Crea un nuevo JLabel gráfico.<br>
+	 * Si no existe el fichero de imagen, se crea un rectángulo blanco con borde rojo
+	 * @param nombreImagenObjeto	Nombre fichero donde está la imagen del objeto. Puede ser también un nombre de recurso desde el paquete de esta clase.
+	 * @param anchura	Anchura del gráfico en píxels (si es <= 0 ocupa todo el ancho de la imagen original)
+	 * @param altura	Altura del gráfico en píxels (si es <= 0 ocupa todo el alto de la imagen original)
+	 * @param rotacion	Rotación del objeto (en radianes)
+	 * @param opacidad	Opacidad del objeto (0.0f transparente a 1.0f opaco)
+	 * @param flipH	true para flip (espejo) horizontal de la imagen
+	 * @param flipV	true para flip (espejo) vertical de la imagen
+	 */
+	public JLabelGrafico( String nombreImagenObjeto, int anchura, int altura, double rotacion, float opacidad, boolean flipH, boolean flipV ) {
 		setName( nombreImagenObjeto );
 		setImagen( nombreImagenObjeto ); // Cargamos el icono
 		setSize( anchura, altura );
 		setRotacion(rotacion);
 		setOpacidad(opacidad);
+		setFlipHorizontal( flipH );
+		setFlipVertical( flipV );
 	}
+	
 	
 	@Override
 	public void setSize(int anchura, int altura) {
@@ -214,6 +236,28 @@ public class JLabelGrafico extends JLabel {
 		return zoom;
 	}
 	
+	public boolean isFlipHorizontal() {
+		return flipH;
+	}
+
+	/** Modifica la inversión horizontal
+	 * @param flipH	true para inversión horizontal, false para no invertir
+	 */
+	public void setFlipHorizontal(boolean flipH) {
+		this.flipH = flipH;
+	}
+
+	public boolean isFlipVertical() {
+		return flipV;
+	}
+
+	/** Modifica la inversión vertical
+	 * @param flipH	true para inversión vertical, false para no invertir
+	 */
+	public void setFlipVertical(boolean flipV) {
+		this.flipV = flipV;
+	}
+
 	/** Actualiza la posición del objeto
 	 * @param x	Coordenada x (doble) - se redondea al píxel más cercano
 	 * @param y	Coordenada y (doble) - se redondea al píxel más cercano
@@ -236,11 +280,25 @@ public class JLabelGrafico extends JLabel {
 	        int altoDibujado = (int)Math.round(alturaObjeto*zoom);
 	        int difAncho = (getWidth() - anchoDibujado) / 2;  // Offset x para centrar
 	        int difAlto = (getHeight() - altoDibujado) / 2;     // Offset y para centrar
+	        // Flip
+	        BufferedImage imagenFlip = imagenObjeto;
+	        if (flipV) {
+		        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+		        tx.translate(0, -imagenFlip.getHeight(null));
+		        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		        imagenFlip = op.filter(imagenFlip, null);
+	        }
+	        if (flipH) {
+		        AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
+		        tx.translate(-imagenFlip.getWidth(null), 0);
+		        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		        imagenFlip = op.filter(imagenFlip, null);
+	        }
 			// Rotación
 			g2.rotate( radsRotacion, getWidth()/2, getHeight()/2 );  // Incorporar al gráfico la rotación definida
 			// Transparencia
 			g2.setComposite(AlphaComposite.getInstance( AlphaComposite.SRC_OVER, opacidad ) ); // Incorporar la transparencia definida
-	        g2.drawImage(imagenObjeto, difAncho, difAlto, anchoDibujado, altoDibujado, null);  // Dibujar la imagen con el tamaño calculado tras aplicar el zoom
+	        g2.drawImage(imagenFlip, difAncho, difAlto, anchoDibujado, altoDibujado, null);  // Dibujar la imagen con el tamaño calculado tras aplicar el zoom
 	        // Deshacer rotación
 	        g2.rotate( Math.PI*2-radsRotacion, getWidth()/2, getHeight()/2 );
 		}
