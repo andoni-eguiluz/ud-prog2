@@ -291,6 +291,16 @@ public class VentanaGrafica {
 			v.dibujaCirculo( 0, 0, 80, 5f, Color.PINK, Color.MAGENTA );  // Elemento fijo
 			v.dibujaImagen( "img/UD-blue-girable.png", 500, 200, 1.0, 0.0, 1.0f );  // Elemento fijo
 			v.dibujaImagen( "img/sonic.png", xPersonaje, yPersonaje, 1.0, 0.0, 1.0f );  // Elemento móvil
+			// picking adaptado a coordenadas de ventana
+			Point click = v.getRatonPulsado();
+			if (click!=null) {
+				double xClick = v.getXDePixelEnCoordsVentana( click.x );
+				double yClick = v.getYDePixelEnCoordsVentana( click.y );
+				System.out.println( click + " -> (" + xClick + "," + yClick + " offset " + v.getOffsetDibujo() + " zoom" + v.getEscalaDibujo() );
+				v.dibujaCirculo( xClick, yClick, 10, 2f, Color.MAGENTA, Color.CYAN );
+				v.dibujaLinea( xClick, yClick-5, xClick, yClick+5, 1f, Color.BLACK );
+				v.dibujaLinea( xClick-5, yClick, xClick+5, yClick, 1f, Color.BLACK );
+			}
 			v.repaint();
 			v.espera(10);
 		}
@@ -594,6 +604,13 @@ public class VentanaGrafica {
 		lMens.setFont( font );
 	}
 	
+	/** Devuelve el panel de dibujo de la ventana
+	 * @return	Panel donde se dibuja en la ventana
+	 */
+	public JPanel getPanelDibujo() {
+		return panel;
+	}
+	
 	/** Devuelve la altura del panel de dibujo de la ventana
 	 * @return	Altura del panel principal (última coordenada y) en píxels
 	 */
@@ -629,7 +646,32 @@ public class VentanaGrafica {
 		graphics.fillRect( 0, 0, panel.getWidth()+2, panel.getHeight()+2 );
 		if (dibujadoInmediato) repaint();
 	}
+
+	/** Devuelve la coordenada x del espacio de ventana correspondiente a una x de pixels reales sobre el panel gráfico de la ventana
+	 * @param xPixel	X de pixels reales en la ventana gráfica
+	 * @return	X correspondiente del espacio de ventana, aplicando desplazamiento y escala
+	 */
+	public double getXDePixelEnCoordsVentana( double xPixel ) {
+		return (xPixel + offsetInicio.x * escalaDibujo) / escalaDibujo;
+	}
 	
+	/** Devuelve la coordenada y del espacio de ventana correspondiente a una y de pixels reales sobre el panel gráfico de la ventana
+	 * @param yPixel	Y de pixels reales en la ventana gráfica
+	 * @return	Y correspondiente del espacio de ventana, aplicando desplazamiento y escala
+	 */
+	public double getYDePixelEnCoordsVentana( double yPixel ) {
+		return (yPixel + offsetInicio.y * escalaDibujo) / escalaDibujo / (ejeYInvertido?1.0:-1.0);
+	}
+	
+		// Convierte x de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
+		private double calcX( double x ) {
+			return x * escalaDibujo - offsetInicio.x * escalaDibujo;
+		}
+		// Convierte y de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
+		private double calcY( double y ) {
+			return (ejeYInvertido?1.0:-1.0) * y * escalaDibujo - offsetInicio.y * escalaDibujo;
+		}
+
 	/** Dibuja un rectángulo en la ventana
 	 * @param rectangulo	Rectángulo a dibujar
 	 * @param grosor	Grueso de la línea del rectángulo (en píxels)
@@ -656,15 +698,6 @@ public class VentanaGrafica {
 			graphics.drawRect( (int)Math.round(calcX(x)), (int)Math.round(calcY(y))-(int)Math.round(altura*escalaDibujo), (int)Math.round(anchura*escalaDibujo), (int)Math.round(altura*escalaDibujo) );
 		if (dibujadoInmediato) repaint();
 	}
-
-		// Convierte x de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
-		private double calcX( double x ) {
-			return x * escalaDibujo - offsetInicio.x * escalaDibujo;
-		}
-		// Convierte y de coordenadas propuestas a coordenadas visuales (con zoom y desplazamiento)
-		private double calcY( double y ) {
-			return (ejeYInvertido?1.0:-1.0) * y * escalaDibujo - offsetInicio.y * escalaDibujo;
-		}
 
 	/** Dibuja un rectángulo relleno en la ventana
 	 * @param x	Coordenada x de la esquina superior izquierda del rectángulo
