@@ -1,13 +1,14 @@
 package tema2b.ejemplos.editorGraficos;
 
 import java.awt.Color;
+import java.awt.Point;
 
 import utils.ventanas.ventanaBitmap.VentanaGrafica;
 
 /** Clase para crear objetos de tipo vector en 2 dimensiones
  * @author andoni.eguiluz at ingenieria.deusto.es
  */
-public class Vector2D extends Grafico {
+public class Vector2D extends Grafico implements Reorientable {
 
 	//--------------------------------
 	// STATIC
@@ -122,6 +123,11 @@ public class Vector2D extends Grafico {
 	 */
 	public java.awt.geom.Point2D getPoint() {
 		return new java.awt.geom.Point2D.Double( x, y );
+	}
+
+	@Override
+	public void setXY(double x, double y) {
+		setXY( new Point( (int)Math.round(x), (int)Math.round(y) ) );
 	}
 		
 }
